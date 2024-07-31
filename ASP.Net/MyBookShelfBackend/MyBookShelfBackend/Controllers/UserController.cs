@@ -4,7 +4,6 @@ using MyBookShelfBackend.Dtos;
 using MyBookShelfBackend.Helpers;
 using MyBookShelfBackend.Interfaces;
 using MyBookShelfBackend.Models;
-using MyBookShelfBackend.ViewModels;
 
 namespace MyBookShelfBackend.Controllers
 {
@@ -14,14 +13,14 @@ namespace MyBookShelfBackend.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly JwtService _jwtService;
-
-        public UserController(IUserRepository userRepository, JwtService jwt)
+        public UserController(IUserRepository repository, JwtService jwtService)
         {
-            _userRepository = userRepository;
-            _jwtService = jwt;
+            _userRepository = repository;
+            _jwtService = jwtService;
         }
-        [HttpPost(template:"Register")]
-        public IActionResult Register (RegisterDto dto)
+
+        [HttpPost(template: "register")]
+        public IActionResult Register(RegisterDto dto)
         {
             var user = new Users
             {
@@ -29,16 +28,23 @@ namespace MyBookShelfBackend.Controllers
                 Email = dto.EmailAdress,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
-            return Created("Success", _userRepository.Create(user));
-        }
 
-        [HttpPost(template:"Login")] 
-        public IActionResult Login (LoginDto dto)
+            return Created("Sccss", _userRepository.Create(user));
+        }
+        [HttpPost(template: "login")]
+        public IActionResult Login(LoginDto dto)
         {
             var user = _userRepository.GetUsersByEmail(dto.EmailAdress);
 
-            if (user == null) return BadRequest("Wrong credentials");
-            
+            if (user == null)
+            {
+                return BadRequest("Wrong credentials");
+            }
+            if (!BCrypt.Net.BCrypt.Verify(dto.Password, hash: user.PasswordHash))
+            {
+                return BadRequest("Wrong credentials");
+            }
+
             var _jwt = _jwtService.Generate(user.Id);
 
             Response.Cookies.Append("jwt", _jwt, new CookieOptions
@@ -51,7 +57,7 @@ namespace MyBookShelfBackend.Controllers
                 message = "success"
             });
         }
-        [HttpGet(template:"user")]
+        [HttpGet(template: "user")]
         public IActionResult User()
         {
             try
@@ -59,7 +65,7 @@ namespace MyBookShelfBackend.Controllers
                 var jwt = Request.Cookies["jwt"];
                 var token = _jwtService.Verify(jwt);
 
-                string userId = token.Issuer;
+                var userId = token.Issuer;
 
                 var user = _userRepository.GetById(userId);
 
@@ -69,6 +75,17 @@ namespace MyBookShelfBackend.Controllers
             {
                 return Unauthorized();
             }
+
+        }
+        [HttpPost(template: "logout")]
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete(key: "jwt");
+
+            return Ok(new
+            {
+                message = "success"
+            });
         }
 
     }

@@ -17,21 +17,19 @@ namespace MyBookShelfBackend.Repositories
         public Users Create(Users users)
         {
             _appDbContext.Users.Add(users);
-            _appDbContext.SaveChanges();
+            users.Id = _appDbContext.SaveChanges().ToString();
 
             return users;
         }
 
-        public Task<Users> GetById(string id)
+        public Users GetUsersByEmail(string email)
         {
-            return _appDbContext.Users.FirstOrDefaultAsync(User => User.Id == id);
+            return _appDbContext.Users.FirstOrDefault(User => User.Email == email);
         }
 
-        public Task<Users> GetUsersByEmail(string email)
+        public Users GetById(string id)
         {
-            return _appDbContext.Users.FirstOrDefaultAsync(User => User.Email == email);
-
+            return _appDbContext.Users.FirstOrDefault(User => User.Id == id);
         }
-
     }
 }
