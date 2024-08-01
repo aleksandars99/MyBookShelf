@@ -1,0 +1,6 @@
+.navCenter {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 16px;
+} 

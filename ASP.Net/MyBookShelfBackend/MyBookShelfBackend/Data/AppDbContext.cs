@@ -11,8 +11,8 @@ namespace MyBookShelfBackend.Data
         {
         }
 
-        DbSet<Users> Users { get; set; }
-        DbSet<Books> Books { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Books> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

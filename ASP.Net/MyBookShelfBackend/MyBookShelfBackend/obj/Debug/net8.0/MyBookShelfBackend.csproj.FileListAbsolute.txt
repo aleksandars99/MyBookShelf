@@ -143,3 +143,8 @@ C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBacke
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\obj\Debug\net8.0\MyBookShelfBackend.genruntimeconfig.cache
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\obj\Debug\net8.0\ref\MyBookShelfBackend.dll
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
