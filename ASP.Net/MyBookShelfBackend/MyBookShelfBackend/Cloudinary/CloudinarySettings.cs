@@ -1,4 +1,4 @@
-﻿namespace MyBookShelfBackend.Cloudinary
+﻿namespace MyBookShelfBackend.CloudinarySet
 {
     public class CloudinarySettings
     {

@@ -7,7 +7,7 @@ namespace MyBookShelfBackend.Dtos
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string Author { get; set; }
         [Range(0, 10)]
         public decimal Rating { get; set; }

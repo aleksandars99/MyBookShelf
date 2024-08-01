@@ -1,10 +1,15 @@
+using CloudinaryDotNet;
+using dotenv.net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using MyBookShelfBackend.CloudinarySet;
 using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Helpers;
 using MyBookShelfBackend.Interfaces;
 using MyBookShelfBackend.Models;
 using MyBookShelfBackend.Repositories;
+using MyBookShelfBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -25,7 +30,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddTransient<IPhotoService, PhotoService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddHttpContextAccessor();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,6 +46,11 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
+
+//builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+//DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));
+//Cloudinary cloudinary = new Cloudinary(Environment.GetEnvironmentVariable("CLOUDINARY_URL"));
+//cloudinary.Api.Secure = true;
 //builder.Services.AddMemoryCache();
 //builder.Services.AddSession();
 //builder.Services.AddDistributedMemoryCache();

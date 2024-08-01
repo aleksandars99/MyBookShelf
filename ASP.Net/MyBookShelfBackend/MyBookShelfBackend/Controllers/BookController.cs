@@ -4,6 +4,7 @@ using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
 using MyBookShelfBackend.Interfaces;
 using MyBookShelfBackend.Models;
+using MyBookShelfBackend.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyBookShelfBackend.Controllers
@@ -14,10 +15,12 @@ namespace MyBookShelfBackend.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IBookRepository _bookRepository;
-        public BookController(AppDbContext appDbContext, IBookRepository bookRepository)
+        private readonly IPhotoService _photoService;
+        public BookController(AppDbContext appDbContext, IBookRepository bookRepository, IPhotoService photo)
         {
             _context = appDbContext;
             _bookRepository = bookRepository;
+            _photoService = photo;
         }
         [HttpPost(template: "create")]
         public async Task<IActionResult> Create (AddBookDto dto)
@@ -37,10 +40,11 @@ namespace MyBookShelfBackend.Controllers
             var books = await _bookRepository.GetAllBooks();
             return Ok(books);
         }
-        [HttpPut(template:"edit/{id}")]
-        public IActionResult Edit (int id, EditBookDto dto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit (int id, EditBookDto dto)
         {
             var book = _context.Books.Find(id);
+            var image =  await _photoService.AddPhotoAsync(dto.Image);
             if (book is null)
             {
                 return NotFound();
@@ -50,6 +54,7 @@ namespace MyBookShelfBackend.Controllers
             book.Author = dto.Author;
             book.Rating = dto.Rating;
             book.Price = dto.Price;
+            book.Image = image.Url.ToString();
             book.Comments = dto.Comments;
             book.Categories = dto.Categories;
             book.Edition = dto.Edition;
@@ -76,6 +81,23 @@ namespace MyBookShelfBackend.Controllers
             _bookRepository.Save();
 
             return Ok();
+        }
+        [HttpGet(template:"getBook/{id}")]
+        public async Task<IActionResult> GetBookById (int id)
+        {
+            try
+            {
+                var res = await _bookRepository.GetBooksById(id);
+
+                if (res == null) return NotFound();
+
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                  "Error retrieving data from the database");
+            }
         }
     } 
 }

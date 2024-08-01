@@ -1,23 +1,33 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Options;
-using MyBookShelfBackend.Cloudinary;
+using MyBookShelfBackend.CloudinarySet;
 using MyBookShelfBackend.Interfaces;
+using dotenv.net;
 
-namespace RunGroopWebApp.Services
+namespace MyBookShelfBackend.Services
 {
     public class PhotoService : IPhotoService
     {
-        private readonly Cloudinary _cloundinary;
+        public readonly Cloudinary _cloudinary;
 
         public PhotoService(IOptions<CloudinarySettings> config)
         {
-            var acc = new Account(
-                config.Value.CloudName,
-                config.Value.ApiKey,
-                config.Value.ApiSecret
-                );
-            _cloundinary = new Cloudinary(acc);
+            Account account = new Account(
+                "dl5u5xg4i",
+                "673876775777496",
+                "_5pHcErbv0totepyGMqdNd4VOkE"
+            );
+
+            _cloudinary = new Cloudinary(account);
+            _cloudinary.Api.Secure = true;
+            //var acc = new Account(
+            //    config.Value.CloudName,
+            //    config.Value.ApiKey,
+            //    config.Value.ApiSecret
+            //    );
+
+            //_cloundinary = new Cloudinary(acc);
         }
 
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
@@ -31,7 +41,7 @@ namespace RunGroopWebApp.Services
                     File = new FileDescription(file.FileName, stream),
                     Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
                 };
-                uploadResult = await _cloundinary.UploadAsync(uploadParams);
+                uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
             return uploadResult;
         }
@@ -40,7 +50,7 @@ namespace RunGroopWebApp.Services
         {
             var publicId = publicUrl.Split('/').Last().Split('.')[0];
             var deleteParams = new DeletionParams(publicId);
-            return await _cloundinary.DestroyAsync(deleteParams);
+            return await _cloudinary.DestroyAsync(deleteParams);
         }
     }
 }
