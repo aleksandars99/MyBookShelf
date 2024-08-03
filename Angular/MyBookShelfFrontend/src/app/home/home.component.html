@@ -1,1 +1,37 @@
-{{message}}
+<div class="px-0 md:px-36">
+    <div class="relative font-sans before:absolute before:w-full before:h-full before:inset-0 before:opacity-50 before:z-10">
+        <img src="assets/MyBookShelfBanner1.png" alt="Banner Image" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="min-h-[350px] relative z-50 h-full max-w-6xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
+        </div>
+    </div>
+
+    <hr><br><br>
+    <h1 class="mb-4 text-3xl text-center font-extrabold text-gray-900 dark:text-black md:text-5xl lg:text-6xl">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-green-500">
+            Discover What’s Trending,
+        </span>
+        {{currentUser}}
+    </h1>
+    <p class="text-lg font-normal text-gray-500 lg:text-l dark:text-gray-400">
+        Explore, buy, review, and rate books effortlessly. Our site lets you find new reads, share your thoughts, and enjoy a range of interactive features.
+    </p>
+
+
+    <div class="flex flex-wrap flex-row space-x-4"> @for (books of allBooks; track books) {
+        
+        <div class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-white">
+            <a href="#">
+                <img class="h-60 rounded-t-lg" height="150px" [src]="books.image"  alt="" />
+            </a>
+            <div class="p-2 h-20">
+                <a href="#">
+                    <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800">{{books.title}}</h5>
+                </a>
+                <p class="mb-3 font-normal text-center text-gray-700 dark:text-gray-500">{{books.author}}</p>
+            </div>
+        </div>
+    }
+    </div>
+    
+      
+</div>
