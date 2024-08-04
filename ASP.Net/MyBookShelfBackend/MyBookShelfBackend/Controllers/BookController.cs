@@ -23,13 +23,21 @@ namespace MyBookShelfBackend.Controllers
             _photoService = photo;
         }
         [HttpPost(template: "create")]
-        public async Task<IActionResult> Create (AddBookDto dto)
+        public IActionResult Create (AddBookDto dto)
         {
             var book = new Books
             {
                 Title = dto.Title,
+                Description = dto.Description,
+                Image = dto.Image,
                 Author = dto.Author,
+                Price = dto.Price,
+                Categories = dto.Categories,
+                Edition = dto.Edition,
+                PageNumber = dto.PageNumber,
+                Alphabet = dto.Alphabet,
                 ReleaseDate = dto.ReleaseDate,
+                YoutubeLink = dto.YoutubeLink,
                 ISBN = dto.ISBN
             };
             return Created("Success", _bookRepository.CreateBook(book));
@@ -99,5 +107,6 @@ namespace MyBookShelfBackend.Controllers
                   "Error retrieving data from the database");
             }
         }
+
     } 
 }

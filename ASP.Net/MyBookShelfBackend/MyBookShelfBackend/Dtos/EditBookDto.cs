@@ -13,11 +13,11 @@ namespace MyBookShelfBackend.Dtos
         public decimal Rating { get; set; }
         public string Price { get; set; }
         public string[]? Comments { get; set; }
-        public string[]? Categories { get; set; }
+        public string? Categories { get; set; }
         public BookEdition? Edition { get; set; }
         public string? PageNumber { get; set; }
         public string? Alphabet { get; set; }
-        public DateOnly? ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
         public string? YoutubeLink { get; set; }
         public string? ISBN { get; set; }
     }

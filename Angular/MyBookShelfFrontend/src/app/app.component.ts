@@ -11,8 +11,8 @@ import { FlowbiteService } from './flowbite.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     this.flowbite.loadFlowbite(flowbite => {
       // Your custom code here
       console.log('Flowbite loaded', flowbite);
