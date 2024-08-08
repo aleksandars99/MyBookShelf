@@ -149,3 +149,5 @@ C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBacke
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\dotenv.net.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\AutoMapper.dll
+C:\HTML,CSS,JS\Fullstack\MyBookShelf\ASP.Net\MyBookShelfBackend\MyBookShelfBackend\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

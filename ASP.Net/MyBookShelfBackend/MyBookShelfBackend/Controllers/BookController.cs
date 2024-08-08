@@ -25,12 +25,12 @@ namespace MyBookShelfBackend.Controllers
         [HttpPost(template: "create")]
         public async Task<IActionResult> Create (AddBookDto dto)
         {
-            //var res = await _photoService.AddPhotoAsync(dto.Image);
+            var res = await _photoService.AddPhotoAsync(dto.Image);
             var book = new Books
             {
                 Title = dto.Title,
                 Description = dto.Description,
-                Image = /*res.Url.ToString(),*/ dto.Image,
+                Image = res.Url.ToString(), /*dto.Image,*/
                 Author = dto.Author,
                 Price = dto.Price,
                 Categories = dto.Categories,
