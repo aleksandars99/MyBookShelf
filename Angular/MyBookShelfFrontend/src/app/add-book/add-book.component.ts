@@ -36,7 +36,8 @@ export class AddBookComponent  implements OnInit{
     })
   }
   createBook() {
-    this.http.post<any>('https://localhost:7025/api/create', this.form.getRawValue)
+    console.log(this.form.value)
+    this.http.post<any>('https://localhost:7025/api/create', this.form.value)
     .subscribe(response => {
       console.log(response)
       this.router.navigate(['/home']);
