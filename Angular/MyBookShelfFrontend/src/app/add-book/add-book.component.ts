@@ -17,15 +17,15 @@ import { image } from '@cloudinary/url-gen/qualifiers/source';
 export class AddBookComponent  implements OnInit{
   
   img!: CloudinaryImage;
+  form!: FormGroup;
+
   constructor(private http: HttpClient, private router: Router) {
     this.form = new FormGroup({
       title: new FormControl('', Validators.required),
       description: new FormControl(''),
       image: new FormControl(''),
       author: new FormControl('', Validators.required),
-      rating: new FormControl(''),
       price: new FormControl(''),
-      comments: new FormControl(''),
       categories: new FormControl('', Validators.required),
       edition: new FormControl(''),
       pageNumber: new FormControl(''),
@@ -35,7 +35,14 @@ export class AddBookComponent  implements OnInit{
       isbn: new FormControl('', Validators.required)
     })
   }
-  uploadLink = 'https://api.cloudinary.com/v1_1/dl5u5xg4i/upload'
+  createBook() {
+    this.http.post<any>('https://localhost:7025/api/create', this.form.getRawValue)
+    .subscribe(response => {
+      console.log(response)
+      this.router.navigate(['/home']);
+    })
+  }
+
   ngOnInit(): void {
     const cld = new Cloudinary({
       cloud: {
@@ -43,20 +50,7 @@ export class AddBookComponent  implements OnInit{
       }
     });
   }
-  form!: FormGroup;
 
-  addBook() {
-    if (this.form.valid) {
-      this.http.post<Book>('https://localhost:7025/api/create', this.form.value)
-      .subscribe(response => {
-        this.router.navigate(['/home']);
-      },
-    error => {
-      console.log(error)
-    });
-    console.log(this.form.value)
-    }
-  }
-
-  upload = 'https://api.cloudinary.com/v1_1/dl5u5xg4i/image/upload'
+  //upload = 'https://api.cloudinary.com/v1_1/dl5u5xg4i/image/upload'
+ 
 }
