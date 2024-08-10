@@ -30,15 +30,15 @@ namespace MyBookShelfBackend.Services
             //_cloundinary = new Cloudinary(acc);
         }
 
-        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<ImageUploadResult> AddPhotoAsync(string file)
         {
             var uploadResult = new ImageUploadResult();
             if (file.Length > 0)
             {
-                using var stream = file.OpenReadStream();
                 var uploadParams = new ImageUploadParams
                 {
-                    File = new FileDescription(file.FileName, stream),
+                    File = new FileDescription(file),
+                    UseFilename = true
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
