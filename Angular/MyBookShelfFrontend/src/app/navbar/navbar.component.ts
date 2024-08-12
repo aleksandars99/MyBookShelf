@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
 import { FlowbiteService } from '../flowbite.service';
-import { ApiService } from '../../Services/api.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +14,7 @@ import { ApiService } from '../../Services/api.service';
 })
 export class NavbarComponent implements OnInit{
   authenticated:boolean = false;
-  constructor(private http: HttpClient, private fb: FlowbiteService, private apiService: ApiService) {}
+  constructor(private http: HttpClient, private fb: FlowbiteService) {}
 
   ngOnInit(): void {
     this.fb.loadFlowbite(flowbite => {

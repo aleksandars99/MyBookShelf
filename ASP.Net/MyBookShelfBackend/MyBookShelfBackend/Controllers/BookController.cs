@@ -93,23 +93,13 @@ namespace MyBookShelfBackend.Controllers
 
             return Ok();
         }
-        [HttpGet(template:"getBook/{id}")]
-        public async Task<IActionResult> GetBookById (int id)
+
+        [HttpGet(template:"getBook/{isbn}")]
+        public async Task<IActionResult>GetBookByIsbn (string isbn)
         {
-            try
-            {
-                var res = await _bookRepository.GetBooksById(id);
-
-                if (res == null) return NotFound();
-
-                return Ok(res);
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                  "Error retrieving data from the database");
-            }
+           var res = await _bookRepository.GetBooksByIsbn(isbn);
+            if (res == null) return NotFound();
+            return Ok(res);
         }
-
     } 
 }

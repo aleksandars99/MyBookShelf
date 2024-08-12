@@ -38,9 +38,9 @@ namespace MyBookShelfBackend.Repositories
             return _context.Books.Where(b => b.Author == author).ToList();
         }
 
-        public async Task<Books> GetBooksById(int id)
+        public async Task<Books> GetBooksByIsbn(string isbn)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            return await _context.Books.FirstOrDefaultAsync(b => b.ISBN == isbn);
         }
 
         public bool Save()
