@@ -31,6 +31,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddTransient<IPhotoService, PhotoService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddHttpContextAccessor();
@@ -46,6 +47,7 @@ builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
 );
+
 
 //builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
 //DotEnv.Load(options: new DotEnvOptions(probeForEnv: true));

@@ -1,4 +1,5 @@
 ﻿using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
@@ -16,11 +17,27 @@ namespace MyBookShelfBackend.Controllers
         private readonly AppDbContext _context;
         private readonly IBookRepository _bookRepository;
         private readonly IPhotoService _photoService;
-        public BookController(AppDbContext appDbContext, IBookRepository bookRepository, IPhotoService photo)
+        private readonly ICommentRepository _commentRepository;
+        private readonly SignInManager<Users> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<Users> _userManager;
+        public BookController(
+            AppDbContext appDbContext, 
+            IBookRepository bookRepository, 
+            IPhotoService photo,
+            ICommentRepository commentRepository, 
+            SignInManager<Users> signInManager, 
+            RoleManager<IdentityRole> roleManager,
+            UserManager<Users> userManager
+            )
         {
             _context = appDbContext;
             _bookRepository = bookRepository;
             _photoService = photo;
+            _commentRepository = commentRepository;
+            _signInManager = signInManager;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
         [HttpPost(template: "create")]
         public async Task<IActionResult> Create ([FromBody] AddBookDto dto)
@@ -51,11 +68,11 @@ namespace MyBookShelfBackend.Controllers
             var books = await _bookRepository.GetAllBooks();
             return Ok(books);
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Edit (int id, EditBookDto dto)
+        [HttpPut("edit/{isbn}")]
+        public async Task<IActionResult> Edit (string isbn, EditBookDto dto)
         {
-            var book = _context.Books.Find(id);
-            var image =  await _photoService.AddPhotoAsync(dto.Image);
+            var book = _context.Books.Find(isbn);
+            //var image =  await _photoService.AddPhotoAsync(dto.Image);
             if (book is null)
             {
                 return NotFound();
@@ -65,7 +82,7 @@ namespace MyBookShelfBackend.Controllers
             book.Author = dto.Author;
             book.Rating = dto.Rating;
             book.Price = dto.Price;
-            book.Image = image.Url.ToString();
+           // book.Image = image.Url.ToString();
             book.Comments = dto.Comments;
             book.Categories = dto.Categories;
             book.Edition = dto.Edition;
@@ -100,6 +117,32 @@ namespace MyBookShelfBackend.Controllers
            var res = await _bookRepository.GetBooksByIsbn(isbn);
             if (res == null) return NotFound();
             return Ok(res);
+        }
+        [HttpPost(template:"addComment")]
+        public async Task<IActionResult>AddComment(AddCommentDto dto)
+        {
+            if (ModelState.IsValid)
+            {
+                Users u = await _userManager.GetUserAsync(User);
+                var comment = new Comment
+                {
+                    text = dto.Text,
+                    TimeCreated = DateTime.Now,
+                    UserName = u.UserName,
+                    BookId = dto.BookId,
+                };
+                _context.Add(comment);
+                await _context.SaveChangesAsync();
+            }
+            return BadRequest(ModelState);
+            //var cat = await _bookRepository.GetBooksByIsbn(isbn);
+            //if (cat == null) return NotFound();
+            //if (cat == null)
+            //{
+            //    cat.Comments = new List<string>();
+            //} 
+            //cat.Comments.
+
         }
     } 
 }

@@ -5,25 +5,28 @@
             <img [src]="currentBook.image" class="sm:h-max sm:w-max mx-auto"> 
             <p class="text-center mt-3 text-gray-900">Page Number: <span class="text-gray-600"> <input [(ngModel)]="currentBook.pageNumber" type="text" id="pageNum" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
             <p class="text-center mt-3 text-gray-900">Alphabet: <span class="text-gray-600"> <input [(ngModel)]="currentBook.alphabet" type="text" id="alph" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-20 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
-            <p class="text-center text-gray-900">Format: <span class="text-gray-600"> {{getEdition(currentBook.edition)}}</span></p>
-            <label for="format">Add format</label>
-            <select id="format" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-1/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <!-- <p class="text-center text-gray-900">Format: <span class="text-gray-600"> {{getEdition(currentBook.edition)}}</span></p> -->
+            <label for="format">Change format</label>
+            <select id="format" [(ngModel)]="currentBook.edition" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-1/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="0">Hardcover</option>
                 <option value="1">Paperback</option>
                 <option value="2">Ebook</option>
                 <option value="3">Audiobook</option>
             </select>
-            <button type="button" class="text-black ml-1 p-1 bg-gray-50 dark:bg-gray-100 hover:border-blue-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-1 border-2 dark:border-2 dark:border-gray-600">Add</button>
+            <!-- <button type="button" class="text-black ml-1 p-1 bg-gray-50 dark:bg-gray-100 hover:border-blue-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-1 border-2 dark:border-2 dark:border-gray-600">Add</button> -->
             <p class="text-center mt-3 text-gray-900">Release date: <span class="text-gray-600"> <input [(ngModel)]="currentBook.releaseDate" type="text" id="rDate" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
-            <p class="text-center mt-3 text-gray-900">ISBN: <span class="text-gray-600"> <input [(ngModel)]="currentBook.isbn" type="text" id="isbnId" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
+            <p class="text-center mt-3 text-gray-900">ISBN: <span class="text-gray-600">{{currentBook.isbn}}</span></p> 
             <!-- <p class="text-center text-gray-900">Release date: <span class="text-gray-600"> {{currentBook.releaseDate | date: 'dd-MMM-yyyy'}}</span></p> -->
         </div>
         <div class="xxs:col-span-9 md:col-span-9 lg:col-span-5 xxs:order-2 md:order-3 lg:order-2 xxs:mt-4 md:mt-0 xxs:text-center md:text-start xxs:border xxs:border-y-6 md:border-y-0">
-            <h1 class="font-bold text-3xl text-red-800 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0 ">{{currentBook.title}}</h1>
-            <button class="font-bold text-2xl text-gray-900 mb-2">{{currentBook.author}}</button>
-            <h3 class="mb-1" >Categories: {{currentBook.categories}}</h3>
-            <label for="categories">Add category</label>
-            <select id="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-2/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <!-- <h1 class="font-bold text-3xl ml-2 text-red-800 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0 ">{{currentBook.title}}</h1> -->
+            <!-- <input [(ngModel)]="currentBook.title" type="text" id="large-input" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/> -->
+            <input [(ngModel)]="currentBook.title" type="text" id="large-input" class="block w-40 p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <!-- <button class="font-bold text-2xl ml-2 text-gray-900 mb-2">{{currentBook.author}}</button> -->
+            <input [(ngModel)]="currentBook.author" type="text" id="large-input" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <!-- <h3 class="mb-1 ml-2" >Categories: {{currentBook.categories}}</h3> -->
+            <label for="categories" class="ml-2">Change category</label>
+            <select id="categories" [(ngModel)]="currentBook.categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-2/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
                 <option value="Biograpfy">Biopgrapfy</option>
@@ -43,11 +46,11 @@
                 <option value="Science">Science</option>
                 <option value="Sci-Fi">Sci-Fi</option>
             </select>
-            <button type="button" class="text-black ml-1 p-2 bg-gray-50 dark:bg-gray-100 hover:border-blue-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 border-2 dark:border-2 dark:border-gray-600">Add</button>
+            <!-- <button type="button" class="text-black ml-1 p-2 bg-gray-50 dark:bg-gray-100 hover:border-blue-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 border-2 dark:border-2 dark:border-gray-600">Add</button> -->
             
             <br><br>
 
-            <nav aria-label="Page navigation example" class="w-full">
+            <nav aria-label="Page navigation example" class="w-full ml-2">
                 <ul class="inline-flex text-sm w-full">
                 <li>
                     <a (click)="showAboutBook()" class="flex cursor-pointer items-center justify-center px-3 h-14 w-32 leading-tight text-gray-700 bg-white border border-gray-600 dark:bg-white dark:border-gray-700 dark:text-gray-700 dark:hover:bg-gray-700 dark:hover:text-white">About book</a>
@@ -73,18 +76,18 @@
         </div>
         <div class="xxs:col-span-9 md:col-span-6 lg:col-span-2 xxs:order-3 md:order-2 lg:order-3">
             <div class="border border-gray-600 w-full">
-                <h1 class="text-red-700 pl-2">Cena: <span><input [(ngModel)]="currentBook.price" type="text" id="price" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></h1>
+                <h1 class="text-red-700 pl-2">Price: {{priceVal}} {{currencyVal}}<span><input [(ngModel)]="currentBook.price" type="text" id="price" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></h1>
                 <hr>
                 <div class="container w-full">
                     <details class="border border-y-2">
                         <summary class="cursor-pointer">Select a County</summary>
                         <div>
                             <p>
-                                <p>Srbija: <span class="text-red-600">{{currentBook.price}}</span>  
-                                <p>Crna Gora: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span>  
-                                <p>Hrvatska: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span>  
-                                <p>Bosna i Hercegovina: <span class="text-red-600">{{cutPriceBam(currentBook.price)}} BAM</span>  
-                                <p>Severna Makedonija: <span class="text-red-600">{{cutPriceMkd(currentBook.price)}} MKD</span>  
+                                <button (click)="changeToRsd()">Srbija: <span class="text-red-600">{{currentBook.price}}</span>  </button><br>
+                                <button (click)="changeToEur()">Crna Gora: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span> </button>  <br>
+                                <button (click)="changeToEur()">Hrvatska: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span>   </button><br>
+                                <button (click)="changeToBam()">Bosna i Hercegovina: <span class="text-red-600">{{cutPriceBam(currentBook.price)}} BAM</span> </button><br>  
+                                <button (click)="changeToMkd()">Severna Makedonija: <span class="text-red-600">{{cutPriceMkd(currentBook.price)}} MKD</span>  </button><br>
                             </p>
                         </div>
                     </details>
@@ -92,10 +95,10 @@
                         <summary class="cursor-pointer">Select Edition</summary>
                         <div>
                             <p>
-                                <button>Paperback: <span class="text-red-600">{{currentBook.price}}</span>  </button><br>
-                                <button>Hardcover: <span class="text-red-600">{{hardcoverPrice(currentBook.price)}} rsd</span></button><br>  
-                                <button>Ebook: <span class="text-red-600">{{eBookPrice(currentBook.price)}} rsd</span>  </button><br>
-                                <button>Audiobook: <span class="text-red-600">{{audioBookPrice(currentBook.price)}} rsd</span></button><br> 
+                                <button>Paperback: <span class="text-red-600">{{letherbackPriceVal}} {{currencyVal}}</span>  </button><br>
+                                <button>Hardcover: <span class="text-red-600">{{hardcoverPriceVal}} {{currencyVal}}</span></button><br>  
+                                <button>Ebook: <span class="text-red-600">{{eBookPriceVal}} {{currencyVal}}</span>  </button><br>
+                                <button>Audiobook: <span class="text-red-600">{{audiobookPriceVal}} {{currencyVal}}</span></button><br> 
                             </p>
                         </div>
                     </details>
@@ -104,7 +107,7 @@
                 <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-white focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-white mt-2 mb-2">ADD TO WISHLIST</button>
                 <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-white focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-white mt-2 mb-2">HOW TO BUY?</button>
 
-                <button type="submit" class="focus:outline-none block w-full h-8 text-white bg-blue-600 focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-blue-600 mt-2 mb-2">Save Changes</button>
+                <button type="submit" (click)="updateBook()" class="focus:outline-none block w-full h-8 text-white bg-blue-600 focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-blue-600 mt-2 mb-2">Save Changes</button>
             </div>
         </div>
     </div>

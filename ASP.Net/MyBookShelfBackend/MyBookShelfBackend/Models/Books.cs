@@ -12,7 +12,7 @@ namespace MyBookShelfBackend.Models
         [Range(0, 10)]
         public decimal? Rating { get; set; }
         public string? Price { get; set; }
-        public string[]? Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
         public string? Categories { get; set; }
         public BookEdition? Edition { get; set; }
         public string? PageNumber { get; set; }

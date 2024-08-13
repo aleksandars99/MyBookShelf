@@ -13,6 +13,7 @@ namespace MyBookShelfBackend.Data
 
         public DbSet<Users> Users { get; set; }
         public DbSet<Books> Books { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

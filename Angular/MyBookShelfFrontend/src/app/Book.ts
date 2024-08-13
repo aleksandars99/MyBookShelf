@@ -5,8 +5,8 @@ export interface Book {
     author: string;
     rating: number;
     price: string
-    category: string;
-    edition: string;
+    category: string[];
+    edition: string[];
     pageNumber: string;
     alphabet: string;
     releaseDate: Date;
