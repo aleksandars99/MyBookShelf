@@ -40,7 +40,9 @@ namespace MyBookShelfBackend.Repositories
 
         public async Task<Books> GetBooksByIsbn(string isbn)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.ISBN == isbn);
+            return await _context.Books
+                .Include(b=>b.Comments)
+                .FirstOrDefaultAsync(b => b.ISBN == isbn);
         }
 
         public bool Save()

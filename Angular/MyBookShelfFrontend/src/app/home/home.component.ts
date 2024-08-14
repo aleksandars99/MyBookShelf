@@ -52,4 +52,19 @@ export class HomeComponent implements OnInit{
     this.bookService.isbn = isbn;
     this.router.navigate([`editBook/:${isbn}`])
   }
+  deleteBook(isbn: string) {
+    const confirmed = window.confirm('Are you sure u want to delete this book?')
+    if (confirmed) {
+      this.bookService.deleteBook(isbn).subscribe(
+        response => {
+          location.reload();
+          console.log(response)
+        }
+      )
+    }
+    else {
+      console.log('delete canceled')
+    }
+    
+  }
 }

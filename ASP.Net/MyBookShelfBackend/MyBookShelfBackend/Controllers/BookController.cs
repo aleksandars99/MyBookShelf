@@ -1,6 +1,7 @@
 ﻿using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
 using MyBookShelfBackend.Interfaces;
@@ -68,47 +69,65 @@ namespace MyBookShelfBackend.Controllers
             var books = await _bookRepository.GetAllBooks();
             return Ok(books);
         }
-        [HttpPut("edit/{isbn}")]
-        public async Task<IActionResult> Edit (string isbn, EditBookDto dto)
+        [HttpGet(template:"GetAll")]
+        public async Task<IEnumerable<Books>>GetallBooks()
         {
-            var book = _context.Books.Find(isbn);
+            return await _context.Books
+                .Include(b => b.Comments)
+                .ToListAsync();
+        }
+        [HttpPut(template:"edit/{isbn}")]
+        public async Task<IActionResult> Edit (string isbn,[FromBody] EditBookDto dto)
+        {
+
+            //var book = _context.Books.Find(isbn);
+            //var book = await _bookRepository.GetBooksByIsbn(isbn);
+
             //var image =  await _photoService.AddPhotoAsync(dto.Image);
-            if (book is null)
-            {
-                return NotFound();
-            }
+            //if (book is null)
+            //{
+            //    return NotFound();
+            //}
+            var book = await _bookRepository.GetBooksByIsbn(isbn);
+            if (book == null) return NotFound();
             book.Title = dto.Title;
             book.Description = dto.Description;
             book.Author = dto.Author;
-            book.Rating = dto.Rating;
             book.Price = dto.Price;
-           // book.Image = image.Url.ToString();
-            book.Comments = dto.Comments;
             book.Categories = dto.Categories;
             book.Edition = dto.Edition;
             book.PageNumber = dto.PageNumber;
             book.Alphabet = dto.Alphabet;
             book.ReleaseDate = dto.ReleaseDate;
-            book.YoutubeLink = dto.YoutubeLink;
             book.ISBN = dto.ISBN;
 
             _bookRepository.Save();
             return Ok(book);
         }
-        [HttpDelete(template:"delete/{id}")]
-        public IActionResult Delete(int id)
+        //[HttpDelete(template:"delete/{id}")]
+        //public IActionResult Delete(int id)
+        //{
+        //    var book = _context.Books.Find(id);
+
+        //    if (book is null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    _context.Books.Remove(book);
+        //    _bookRepository.Save();
+
+        //    return Ok();
+        //}
+        [HttpDelete(template:"delete/{isbn}")]
+        public async Task<IActionResult> Delete(string isbn)
         {
-            var book = _context.Books.Find(id);
-
-            if (book is null)
-            {
-                return NotFound();
-            }
-
+            var book = await _bookRepository.GetBooksByIsbn(isbn);
+            if (book == null) return NotFound();
             _context.Books.Remove(book);
             _bookRepository.Save();
-
             return Ok();
+
         }
 
         [HttpGet(template:"getBook/{isbn}")]
@@ -118,6 +137,7 @@ namespace MyBookShelfBackend.Controllers
             if (res == null) return NotFound();
             return Ok(res);
         }
+
         [HttpPost(template:"addComment")]
         public async Task<IActionResult>AddComment(AddCommentDto dto)
         {

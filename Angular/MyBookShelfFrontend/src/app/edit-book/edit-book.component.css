@@ -1,0 +1,5 @@
+.iconInline {
+    display: inline-flex; /* Ensures SVG and text are aligned inline */
+    align-items: center; /* Vertically centers the SVG with the text */
+    margin-left: 8px; /* Adds some space between the text and the icon */
+}

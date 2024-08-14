@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../Services/book.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { response } from 'express';
+import { Router } from '@angular/router';
+import { error } from 'console';
 
 @Component({
   selector: 'app-edit-book',
   standalone: true,
-  imports: [HttpClientModule, CommonModule, FormsModule],
+  imports: [HttpClientModule, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './edit-book.component.html',
   styleUrl: './edit-book.component.css'
 })
@@ -17,8 +19,21 @@ export class EditBookComponent implements OnInit {
   priceStable: any
   editionPrice: any
   currencyVal: string = 'RSD'
-  constructor(private bookService: BookService) {
+  form!: FormGroup
 
+  constructor(private bookService: BookService, private router: Router) {
+    this.form = new FormGroup({
+      Title: new FormControl(),
+      Description: new FormControl(),
+      author: new FormControl(),
+      price: new FormControl(),
+      categories: new FormControl(),
+      edition: new FormControl(),
+      pageNumber: new FormControl(),
+      alphabet: new FormControl(),
+      releaseDate: new FormControl(),
+      isbn: new FormControl()
+    })
   }
   ngOnInit(): void {
     console.log(this.bookService.isbn)
@@ -161,11 +176,36 @@ export class EditBookComponent implements OnInit {
     this.audiobookPriceVal = Math.floor(this.priceVal * 1.2)
   }
   updateBook() {
-    this.bookService.updateBook().subscribe(
+    const data = {
+      Title: this.form.get('Title')?.value,
+      Description: this.form.get('Description')?.value,
+      author: this.form.get('author')?.value,
+      price: this.form.get('price')?.value,
+      categories: this.form.get('categories')?.value,
+      edition: this.form.get('edition')?.value,
+      pageNumber: this.form.get('pageNumber')?.value,
+      alphabet: this.form.get('alphabet')?.value,
+      releaseDate: this.form.get('releaseDate')?.value,
+      isbn: this.form.get('isbn')?.value,
+    }
+
+    console.log("data", data)
+    console.log('Forma', this.form)
+    console.log('FormaRaw', this.form.getRawValue())
+
+    this.bookService.updateBook(this.form.getRawValue(), this.currentBook.isbn).subscribe(
       (response:any) => {
         console.log(response)
+        console.log("this" + data)
+        this.router.navigate(['home'])
       }
     )
   }
+  checkData() {
+    console.log(this.form.getRawValue())
+  }
+
+
+  
 }
 

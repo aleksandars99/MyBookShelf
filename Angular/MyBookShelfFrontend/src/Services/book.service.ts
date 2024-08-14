@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Book } from '../app/Book';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,10 @@ export class BookService {
   getAllBooks():Observable<any> {
     return this.http.get("https://localhost:7025/api/AllBooks", {withCredentials: true})
   }
-  updateBook():Observable<any> {
-    return this.http.put(`https://localhost:7025/edit/${this.isbn}`,{withCredentials: true})
+  updateBook(data: Book, isbn: string):Observable<any> {
+    return this.http.put(`https://localhost:7025/api/edit/${isbn}`, data)
+  }
+  deleteBook(isbn: string): Observable<any> {
+    return this.http.delete(`https://localhost:7025/api/delete/${isbn}`)
   }
 }

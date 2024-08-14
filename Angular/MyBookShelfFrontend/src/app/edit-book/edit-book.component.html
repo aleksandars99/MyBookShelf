@@ -1,32 +1,33 @@
-
+<form [formGroup]="form" method="post" enctype="multipart/form-data">
+    
 <div class="lg:px-36">
     <div class="grid grid-cols-9 gap-4 p-5 pt-10 order-1 lg:order-1" *ngIf="currentBook">
         <div class="xxs:col-span-9 md:col-span-3 lg:col-span-2 ">
             <img [src]="currentBook.image" class="sm:h-max sm:w-max mx-auto"> 
-            <p class="text-center mt-3 text-gray-900">Page Number: <span class="text-gray-600"> <input [(ngModel)]="currentBook.pageNumber" type="text" id="pageNum" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
-            <p class="text-center mt-3 text-gray-900">Alphabet: <span class="text-gray-600"> <input [(ngModel)]="currentBook.alphabet" type="text" id="alph" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-20 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
+            <p class="text-center mt-3 text-gray-900">Page Number: <span class="text-gray-600"> <input [(ngModel)]="currentBook.pageNumber" formControlName="pageNumber" type="text" id="pageNum" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
+            <p class="text-center mt-3 text-gray-900">Alphabet: <span class="text-gray-600"> <input [(ngModel)]="currentBook.alphabet"  formControlName="alphabet" type="text" id="alph" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-20 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
             <!-- <p class="text-center text-gray-900">Format: <span class="text-gray-600"> {{getEdition(currentBook.edition)}}</span></p> -->
             <label for="format">Change format</label>
-            <select id="format" [(ngModel)]="currentBook.edition" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-1/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select id="format" [(ngModel)]="currentBook.edition" formControlName="edition" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-1/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="0">Hardcover</option>
                 <option value="1">Paperback</option>
                 <option value="2">Ebook</option>
                 <option value="3">Audiobook</option>
             </select>
             <!-- <button type="button" class="text-black ml-1 p-1 bg-gray-50 dark:bg-gray-100 hover:border-blue-500 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-1 border-2 dark:border-2 dark:border-gray-600">Add</button> -->
-            <p class="text-center mt-3 text-gray-900">Release date: <span class="text-gray-600"> <input [(ngModel)]="currentBook.releaseDate" type="text" id="rDate" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
-            <p class="text-center mt-3 text-gray-900">ISBN: <span class="text-gray-600">{{currentBook.isbn}}</span></p> 
+            <p class="text-center mt-3 text-gray-900">Release date: <span class="text-gray-600"> <input [(ngModel)]="currentBook.releaseDate" formControlName="releaseDate" type="text" id="rDate" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></p> 
+            <p class="text-center mt-3 text-gray-900">ISBN: <input [(ngModel)]="currentBook.isbn" formControlName="isbn" class="text-gray-600"></p> 
             <!-- <p class="text-center text-gray-900">Release date: <span class="text-gray-600"> {{currentBook.releaseDate | date: 'dd-MMM-yyyy'}}</span></p> -->
         </div>
         <div class="xxs:col-span-9 md:col-span-9 lg:col-span-5 xxs:order-2 md:order-3 lg:order-2 xxs:mt-4 md:mt-0 xxs:text-center md:text-start xxs:border xxs:border-y-6 md:border-y-0">
             <!-- <h1 class="font-bold text-3xl ml-2 text-red-800 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0 ">{{currentBook.title}}</h1> -->
             <!-- <input [(ngModel)]="currentBook.title" type="text" id="large-input" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/> -->
-            <input [(ngModel)]="currentBook.title" type="text" id="large-input" class="block w-40 p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <input [(ngModel)]="currentBook.title" formControlName="Title" type="text" id="large-input" class="block w-40 p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <!-- <button class="font-bold text-2xl ml-2 text-gray-900 mb-2">{{currentBook.author}}</button> -->
-            <input [(ngModel)]="currentBook.author" type="text" id="large-input" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <input [(ngModel)]="currentBook.author" formControlName="author" type="text" id="large-input" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <!-- <h3 class="mb-1 ml-2" >Categories: {{currentBook.categories}}</h3> -->
             <label for="categories" class="ml-2">Change category</label>
-            <select id="categories" [(ngModel)]="currentBook.categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-2/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select id="categories" [(ngModel)]="currentBook.categories" formControlName="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-2/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option value="Action">Action</option>
                 <option value="Adventure">Adventure</option>
                 <option value="Biograpfy">Biopgrapfy</option>
@@ -64,19 +65,43 @@
 
             <div id="aboutBook" *ngIf="aboutBook" class=" w-full">
                 <h1 class="text-center">About book</h1>
-                <textarea [(ngModel)]="currentBook.description" id="description" rows="20" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg  focus:ring-gray-500 focus:border-gray-500 dark:bg-white dark:placeholder-gray-400 dark:text-gray-800 dark:focus:border-gray-500" placeholder="Edit description"></textarea>
+                <textarea [(ngModel)]="currentBook.description" formControlName="Description" id="description" rows="20" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg  focus:ring-gray-500 focus:border-gray-500 dark:bg-white dark:placeholder-gray-400 dark:text-gray-800 dark:focus:border-gray-500" placeholder="Edit description"></textarea>
 
             </div>
             <div id="comments" *ngIf="comments" class=" w-full">
                 <h1 class="text-center">Comments</h1>
-                <p class="p-2">{{currentBook.comments  || 'no comments yet'}} </p> 
-                  
+                <!-- <p class="p-2">{{currentBook.comments  || 'no comments yet'}} </p>  -->
+                <ul>
+                    <li *ngFor="let comment of currentBook.comments">
+                        <article class="p-6 text-base bg-white rounded-lg dark:bg-white">
+                            <footer class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-gray-900 font-semibold"><img
+                                            class="mr-2 w-6 h-6 rounded-full"
+                                            src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                                        alt="Michael Gough">{{comment.userName}}</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
+                                            title="February 8th, 2022">{{comment.timeCreated | date: 'dd-MMM-yyyy HH:mm'}}</time></p>
+                                </div>
+                                <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                                    class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-white dark:hover:bg-red-500 dark:focus:ring-gray-600"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>              
+                                </button>
+                            </footer>
+                            <p class="text-gray-500 dark:text-gray-400">{{comment.text}}</p>
+                        </article>
+                    </li>
+
+                </ul>
             </div>
         
         </div>
         <div class="xxs:col-span-9 md:col-span-6 lg:col-span-2 xxs:order-3 md:order-2 lg:order-3">
             <div class="border border-gray-600 w-full">
-                <h1 class="text-red-700 pl-2">Price: {{priceVal}} {{currencyVal}}<span><input [(ngModel)]="currentBook.price" type="text" id="price" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></h1>
+                <h1 class="text-red-700 pl-2">Price: {{priceVal}} {{currencyVal}}<span><input [(ngModel)]="currentBook.price" formControlName="price" type="text" id="price" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-16 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/></span></h1>
                 <hr>
                 <div class="container w-full">
                     <details class="border border-y-2">
@@ -103,7 +128,7 @@
                         </div>
                     </details>
                 </div>
-                <button type="button" class="focus:outline-none block w-full h-8 text-white bg-red-800 focus:ring-4 focus:ring-red-300 font-medium text-sm dark:bg-red-700 dark:focus:ring-red-900 mt-2 mb-2">ADD TO CART</button>
+                <button (click)="checkData()" type="button" class="focus:outline-none block w-full h-8 text-white bg-red-800 focus:ring-4 focus:ring-red-300 font-medium text-sm dark:bg-red-700 dark:focus:ring-red-900 mt-2 mb-2">ADD TO CART</button>
                 <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-white focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-white mt-2 mb-2">ADD TO WISHLIST</button>
                 <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-white focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-white mt-2 mb-2">HOW TO BUY?</button>
 
@@ -112,3 +137,4 @@
         </div>
     </div>
 </div>
+</form>

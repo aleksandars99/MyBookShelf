@@ -26,6 +26,9 @@ namespace MyBookShelfBackend.Data
                 entity.Property(e => e.Price).HasMaxLength(10);
                 entity.Property(e => e.PageNumber).HasMaxLength(5);
                 entity.Property(e => e.Alphabet).HasMaxLength(20);
+                entity.HasMany(b => b.Comments)
+                .WithOne(c => c.book)
+                .HasForeignKey(c => c.BookId);
             });
         }
 
