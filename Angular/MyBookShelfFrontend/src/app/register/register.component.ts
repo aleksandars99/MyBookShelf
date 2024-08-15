@@ -18,7 +18,7 @@ export class RegisterComponent {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       emailAdress: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', Validators.required),
+      password: new FormControl('', [this.uppercaseValidator,Validators.minLength(6), Validators.required]),
       passwordConfirm: new FormControl('', Validators.required),
     }, {
       validators: this.validatePasswords,
@@ -43,5 +43,9 @@ export class RegisterComponent {
     });
     console.log(user)
     }
+  }
+  uppercaseValidator(control: any) {
+    const hasUppercase = /[A-Z]/.test(control.value);
+    return hasUppercase ? null : { noUppercase: true };
   }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
 using MyBookShelfBackend.Helpers;
 using MyBookShelfBackend.Interfaces;
@@ -13,23 +14,40 @@ namespace MyBookShelfBackend.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly JwtService _jwtService;
-        public UserController(IUserRepository repository, JwtService jwtService)
+        private readonly UserManager<Users> _userManager;
+        public UserController(IUserRepository repository, JwtService jwtService, UserManager<Users> userManager)
         {
             _userRepository = repository;
             _jwtService = jwtService;
+            _userManager = userManager;
         }
 
         [HttpPost(template: "register")]
-        public IActionResult Register(RegisterDto dto)
+        public async Task<IActionResult> Register(RegisterDto dto)
         {
+            var alreadyUser = await _userManager.FindByEmailAsync(dto.EmailAdress);
+            if (alreadyUser != null)
+            {
+                return BadRequest("Email already in use.");
+            }
             var user = new Users
             {
                 UserName = dto.Name,
                 Email = dto.EmailAdress,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
             };
-
-            return Created("Sccss", _userRepository.Create(user));
+            var created = await _userManager.CreateAsync(user);
+            if (!created.Succeeded)
+            {
+                return BadRequest(created.Errors);
+            }
+            var roleCreated = await _userManager.AddToRoleAsync(user, Roles.User);
+            if (!roleCreated.Succeeded)
+            {
+                await _userManager.DeleteAsync(user);
+                return BadRequest(roleCreated.Errors);
+            }
+            return Created("Success", user);
         }
         [HttpPost(template: "login")]
         public IActionResult Login(LoginDto dto)
@@ -87,6 +105,22 @@ namespace MyBookShelfBackend.Controllers
                 message = "success"
             });
         }
-
+        [HttpGet(template:"getUserWithRole/{id}")]
+        public async Task<IActionResult> GetUserWithRoles(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null) { 
+                return NotFound("User not found "); 
+            }
+            var roles =  await _userManager.GetRolesAsync(user);
+            var userWithRolesDto = new UserWithRolesDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Roles = roles.ToList()
+            };
+            return Ok(userWithRolesDto);
+        }
     }
 }

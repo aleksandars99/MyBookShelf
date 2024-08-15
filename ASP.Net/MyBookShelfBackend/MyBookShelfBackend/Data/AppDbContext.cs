@@ -30,6 +30,10 @@ namespace MyBookShelfBackend.Data
                 .WithOne(c => c.book)
                 .HasForeignKey(c => c.BookId);
             });
+            builder.Entity<Users>(entity =>
+            {
+                entity.HasIndex(e => e.Email).IsUnique();
+            });
         }
 
 

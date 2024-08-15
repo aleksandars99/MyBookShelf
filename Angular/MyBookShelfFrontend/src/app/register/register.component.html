@@ -11,7 +11,7 @@
                         <input formControlName="name"
                             class="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="namea" type="text" placeholder="Enter your name"/>
-                        <label class="block font-semibold text-gray-700 mb-2" for="email">
+                        <label class="block font-semibold text-gray-700 mb-2" for="email"><br>
                             Email Address
                         </label>
                         <input formControlName="emailAdress"
@@ -38,6 +38,12 @@
                     <div class="text-red-600" *ngIf="form?.errors?.['mismatch'] && form?.touched">
                         Passwords must match
                     </div>
+                    <div class="text-red-600" *ngIf="form.get('password')?.hasError('noUppercase') && form?.touched">
+                        Password must contain at least one uppercase letter.
+                    </div>
+                    <div class="text-red-600" *ngIf="form.get('password')?.hasError('minlength')">
+                        Password must be at least 6 characters long.
+                      </div>
                     <div class="mb-6 flex flex-col items-center">
                         <button (click)="register()"
                             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
