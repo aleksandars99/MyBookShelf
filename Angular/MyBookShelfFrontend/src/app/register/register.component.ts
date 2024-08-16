@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { error } from 'console';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ import { error } from 'console';
 })
 export class RegisterComponent {
   form!: FormGroup;
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private router: Router, private user: UserService) {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       emailAdress: new FormControl('', [Validators.required, Validators.email]),
@@ -35,7 +36,7 @@ export class RegisterComponent {
     if (this.form.valid) {
       const {name, emailAdress, password} = this.form.value;
       const user = {name, emailAdress, password};
-    this.http.post('https://localhost:7025/api/register', user)
+    this.user.register(user)
     .subscribe(response => {
       this.router.navigate(['/login']);
     }, error => {

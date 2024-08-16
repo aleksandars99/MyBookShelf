@@ -1,0 +1,112 @@
+<div class="xl:px-32 bg-slate-50">
+    <div class="grid grid-cols-9 gap-4 p-5 pt-10 order-1 lg:order-1" *ngIf="currentBook">
+        <div class="xxs:col-span-9 md:col-span-3 lg:col-span-2 ">
+            <img [src]="currentBook.image" class="sm:h-max sm:w-max mx-auto"> 
+            <p class="text-center mt-3 text-gray-900">Page Number: <span class="text-gray-600">{{currentBook.pageNumber}}</span></p> 
+            <p class="text-center mt-3 text-gray-900">Alphabet: <span class="text-gray-600"> {{currentBook.alphabet}}</span></p> 
+            <p class="text-center mt-3 text-gray-900">Format: <span class="text-gray-600"> {{getEdition(currentBook.edition)}}</span></p>
+            <p class="text-center mt-3 text-gray-900">Release date: <span class="text-gray-600"> {{currentBook.releaseDate | date: 'dd-MMM-yyyy'}}</span></p> 
+            <p class="text-center mt-3 text-gray-900">ISBN: <span class="text-gray-600"> {{currentBook.isbn}}</span></p> 
+        </div>
+        <div class="xxs:col-span-9 md:col-span-9 lg:col-span-5 xxs:order-2 md:order-3 lg:order-2 xxs:mt-4 md:mt-0 xxs:text-center md:text-start xxs:border-y-6 md:border-y-0">
+            <h1 class="font-bold text-6xl ml-2 text-red-900 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0 ">{{currentBook.title}}</h1>
+            <button class="font-bold text-4xl ml-2 text-gray-800 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0">{{currentBook.author}}</button>
+            <h3 class="mb-1 ml-2 text-l text-gray-900">Category: <span class="text-gray-600">{{currentBook.categories}}</span></h3>
+            <h3 class="mb-1 ml-2 text-l text-gray-900">Ratings: <span class="text-gray-600">{{currentBook.rating || 'No ratings yet'}}</span></h3>
+            <button (click)="showComments()" class="mb-1 ml-2 text-gray-900 text-l">Leave a comment</button>
+
+            <br><br>
+
+            <nav aria-label="Page navigation example" class="w-full ml-2">
+                <ul class="inline-flex text-sm w-full">
+                <li>
+                    <a id="showAboutBook" (click)="showAboutBook()" [ngStyle]="{'background-color': commentsActive ? 'white' : 'lightgray'}"  class="flex cursor-pointer border-t-0 border-r-0 items-center justify-center rounded-sm px-3 h-14 w-32 leading-tight mr-2 text-gray-700 bg-white border border-gray-600 dark:bg-white dark:border-gray-700 dark:text-gray-700 dark:hover:bg-gray-100 dark:hover:text-gray-700">About book</a>
+                </li>
+                <li>
+                    <a id="showComments" (click)="showComments()" [ngStyle]="{'background-color': commentsActive ? 'lightgray' : 'white'}" class="flex cursor-pointer items-center border-l-0 border-t-0 justify-center rounded-sm px-3 h-14 w-32 leading-tight text-gray-700 bg-white border border-gray-600 dark:bg-white dark:border-gray-700 dark:text-gray-700 dark:hover:bg-gray-100 dark:hover:text-gray-700">Comments</a>
+                </li>
+                </ul>
+            </nav>
+            <br><hr><br>
+
+            <div id="aboutBook" *ngIf="aboutBook" class=" w-full">
+                <h1 class="text-center">About book</h1>
+                <textarea disabled id="description" rows="20" class="block p-2.5 w-full text-md text-gray-900 bg-gray-50 rounded-lg  focus:ring-gray-500 focus:border-gray-500 dark:bg-slate-50 dark:placeholder-gray-400 dark:text-gray-800 dark:focus:border-gray-500" placeholder="Description">{{currentBook.description}}</textarea>
+            </div>
+            <div id="comments" *ngIf="commentsActive" class=" w-full">
+                <h1 class="text-center text-xl">Discussion</h1>
+                <p class="p-2">{{currentBook.comments.length >0  || 'no comments yet'}} </p> 
+                <br><hr><br>
+                <ul>
+                    <li *ngFor="let comment of currentBook.comments">
+                        <article class="p-6 text-base bg-white rounded-lg dark:bg-white">
+                            <footer class="flex justify-between items-center mb-2">
+                                <div class="flex items-center">
+                                    <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-gray-900 font-semibold"><img
+                                            class="mr-2 w-6 h-6 rounded-full"
+                                            src="https://static.vecteezy.com/system/resources/thumbnails/009/734/564/small_2x/default-avatar-profile-icon-of-social-media-user-vector.jpg"
+                                        alt="Michael Gough">{{comment.userName}}</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
+                                            title="February 8th, 2022">{{comment.timeCreated | date: 'dd-MMM-yyyy HH:mm'}}</time></p>
+                                </div>
+                                <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                                    class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-slate-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-slate-50 dark:hover:bg-red-500 dark:focus:ring-gray-600"
+                                    type="button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                    </svg>              
+                                </button>
+                            </footer>
+                            <p class="text-gray-500 dark:text-gray-400">{{comment.text}}</p>
+                        </article>
+                    </li>
+                </ul>
+                <form class="mb-6" [formGroup]="form">
+                    <div class="py-2 px-4 mb-4 bg-slate-50 rounded-lg rounded-t-lg border border-gray-200 dark:bg-slate-50 dark:border-white">
+                        <label for="comment" class="sr-only">Your comment</label>
+                        <textarea id="comment" rows="6" formControlName="text"
+                            class="px-0 w-full resize-none text-sm text-gray-800 border-2 border-gray-300 focus:ring-0 focus:outline-none dark:text-gray-800 dark:placeholder-gray-400 dark:bg-slate-50"
+                            placeholder="Write a comment..." required></textarea>
+                    </div>
+                    <button type="submit" (click)="comment()"
+                        class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-blue-700">
+                        Post comment
+                    </button>
+                </form>
+            </div>
+        
+        </div>
+        <div class="xxs:col-span-9 md:col-span-6 lg:col-span-2 xxs:order-3 md:order-2 lg:order-3">
+            <div class="border border-gray-600 w-full">
+                <h1 class="text-red-700 pl-2">Price: <span>{{currentBook.price}}</span></h1>
+                <hr>
+                <div class="container w-full">
+                    <details class="border border-y-2" open>
+                        <summary class="cursor-pointer">Prices</summary>
+                        <div>
+                            <p>
+                                <button (click)="changeToRsd()">Srbija: <span class="text-red-600">{{currentBook.price}}</span>  </button><br>
+                                <button (click)="changeToEur()">Crna Gora: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span> </button>  <br>
+                                <button (click)="changeToEur()">Hrvatska: <span class="text-red-600">{{cutPriceEur(currentBook.price)}} €</span>   </button><br>
+                                <button (click)="changeToBam()">Bosna i Hercegovina: <span class="text-red-600">{{cutPriceBam(currentBook.price)}} BAM</span> </button><br>  
+                                <button (click)="changeToMkd()">Severna Makedonija: <span class="text-red-600">{{cutPriceMkd(currentBook.price)}} MKD</span>  </button><br>
+                            </p>
+                        </div>
+                    </details>
+                    <details class="border border-y-2" open>
+                        <summary class="cursor-pointer">Select Edition</summary>
+                        <div>
+                            <p>
+                                <p>{{currentBook.edition}} <span class="text-red-600">{{currentBook.price}}</span><br> 
+                            </p>
+                        </div>
+                    </details>
+                </div>
+                <button type="button" class="focus:outline-none block w-full h-8 text-white bg-red-800 focus:ring-4 focus:ring-red-300 font-medium text-sm dark:bg-red-700 dark:focus:ring-red-900 mt-2 mb-2">ADD TO CART</button>
+                <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-slate-50 focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-slate-50 mt-2 mb-2">ADD TO WISHLIST</button>
+                <button type="button" class="focus:outline-none block w-full h-8 text-gray-700 bg-slate-50 focus:ring-4 focus:ring-gray-600 border border-gray-400 font-medium text-sm dark:bg-slate-50 mt-2 mb-2">HOW TO BUY?</button>
+
+            </div>
+        </div>
+    </div>
+</div>

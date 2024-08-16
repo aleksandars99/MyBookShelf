@@ -6,23 +6,29 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Book } from '../Book';
 import { BookService } from '../../Services/book.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../Services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [HttpClientModule, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
-  constructor(private bookService: BookService, private router: Router) {}
+  constructor(private bookService: BookService,private userService:UserService, private router: Router) {}
 
   message = 'Hi'
-  currentUser = ''
+  currentUser:any
+  logedUser: any
+  userCredentials:any = {}
   allBooks: Book[] = [];
   ngOnInit(): void {
-    this.bookService.getUser().subscribe(
+    this.userService.getUser().subscribe(
       (response:any) => {
+        this.logedUser = response
+        console.log(this.logedUser)
         this.message = `Hi ${response.userName}`;
         this.currentUser = response.userName;
         Emitters.authEmitter.emit(true)
@@ -35,6 +41,12 @@ export class HomeComponent implements OnInit{
     console.log(this.message + "User")
     this.getBooks();
     console.log("Image")
+    
+    this.userService.getUserRoles().subscribe(
+      response=> {
+        this.userCredentials = response
+        console.log(this.userCredentials)
+      })
   }
   getBooks() {
     return this.bookService.getAllBooks().subscribe(
@@ -66,5 +78,9 @@ export class HomeComponent implements OnInit{
       console.log('delete canceled')
     }
     
+  }
+  viewBook(isbn: string) {
+    this.bookService.isbn = isbn
+    this.router.navigate([`viewBook/:${isbn}`])
   }
 }

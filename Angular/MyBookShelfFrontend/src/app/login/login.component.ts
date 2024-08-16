@@ -2,7 +2,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { error } from 'console';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   form!: FormGroup
 
   constructor(
-    private http: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private user: UserService
   ) {
     
   }
@@ -26,14 +26,18 @@ export class LoginComponent implements OnInit {
       emailAdress: '',
       password: ''
     });
+    
   }
 
   submit() {
-    this.http.post("https://localhost:7025/api/login", this.form.getRawValue(), 
-    {withCredentials: true})
+    this.user.login(this.form.getRawValue())
     .subscribe( () => this.router.navigate(['/home']));
   }
 
-
+  // getUserWithRoles() {
+  //   this.user.getUserWithRoles().subscribe(
+  //     (response:any) => {console.log(response)}
+  //   )
+  // }
 
 }

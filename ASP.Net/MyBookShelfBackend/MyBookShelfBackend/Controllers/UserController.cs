@@ -95,6 +95,37 @@ namespace MyBookShelfBackend.Controllers
             }
 
         }
+        [HttpGet(template:"userRoles")]
+        public async Task<IActionResult> GetUser()
+        {
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                var token = _jwtService.Verify(jwt);
+                var userId = token.Issuer;
+                var user = _userRepository.GetById(userId);
+
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+                var roles =await _userManager.GetRolesAsync(user);
+                var userWithRolesDto = new UserWithRolesDto
+                {
+                    Id = userId,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Roles = roles.ToList()
+                };
+                return Ok(userWithRolesDto);
+
+
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized();
+            }
+        }
         [HttpPost(template: "logout")]
         public IActionResult Logout()
         {

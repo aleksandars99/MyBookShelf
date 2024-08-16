@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
 import { FlowbiteService } from '../flowbite.service';
+import { UserService } from '../../Services/user.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,7 +15,7 @@ import { FlowbiteService } from '../flowbite.service';
 })
 export class NavbarComponent implements OnInit{
   authenticated:boolean = false;
-  constructor(private http: HttpClient, private fb: FlowbiteService) {}
+  constructor(private userService: UserService, private fb: FlowbiteService, private user: UserService) {}
 
   ngOnInit(): void {
     this.fb.loadFlowbite(flowbite => {
@@ -29,7 +30,14 @@ export class NavbarComponent implements OnInit{
     )
   }
   logout() {
-    this.http.post("https://localhost:7025/api/logout", {}, {withCredentials: true})
+    this.userService.logout()
     .subscribe( () => this.authenticated = false)
+  }
+  getLoginInfo(id: number) {
+    this.user.getUserWithRoles(id).subscribe(
+      response => {
+        console.log(response)
+      }
+    )
   }
 }

@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
+using MyBookShelfBackend.Helpers;
 using MyBookShelfBackend.Interfaces;
 using MyBookShelfBackend.Models;
+using MyBookShelfBackend.Repositories;
 using MyBookShelfBackend.Services;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,6 +24,8 @@ namespace MyBookShelfBackend.Controllers
         private readonly SignInManager<Users> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<Users> _userManager;
+        private readonly IUserRepository _userRepository;
+        private readonly JwtService _jwtService;
         public BookController(
             AppDbContext appDbContext, 
             IBookRepository bookRepository, 
@@ -29,7 +33,9 @@ namespace MyBookShelfBackend.Controllers
             ICommentRepository commentRepository, 
             SignInManager<Users> signInManager, 
             RoleManager<IdentityRole> roleManager,
-            UserManager<Users> userManager
+            UserManager<Users> userManager,
+            IUserRepository userRepository,
+            JwtService jwtService
             )
         {
             _context = appDbContext;
@@ -39,6 +45,8 @@ namespace MyBookShelfBackend.Controllers
             _signInManager = signInManager;
             _roleManager = roleManager;
             _userManager = userManager;
+            _userRepository = userRepository;
+            _jwtService = jwtService;
         }
         [HttpPost(template: "create")]
         public async Task<IActionResult> Create ([FromBody] AddBookDto dto)
@@ -141,20 +149,28 @@ namespace MyBookShelfBackend.Controllers
         [HttpPost(template:"addComment")]
         public async Task<IActionResult>AddComment(AddCommentDto dto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                Users u = await _userManager.GetUserAsync(User);
-                var comment = new Comment
-                {
-                    text = dto.Text,
-                    TimeCreated = DateTime.Now,
-                    UserName = u.UserName,
-                    BookId = dto.BookId,
-                };
-                _context.Add(comment);
-                await _context.SaveChangesAsync();
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            var jwt = Request.Cookies["jwt"];
+            var token = _jwtService.Verify(jwt);
+            var userId = token.Issuer;
+
+            var user = _userRepository.GetById(userId);
+            //var user = await _userRepository.GetById(user.Id);
+            if (user == null) return Unauthorized("user not found");
+            var comment = new Comment
+            {
+                text = dto.Text,
+                TimeCreated = DateTime.Now,
+                UserName = user.UserName,
+                BookId = dto.BookId,
+            };
+            _context.Add(comment);
+            await _context.SaveChangesAsync();
+            return Ok(comment);
+            //return BadRequest(ModelState);
             //var cat = await _bookRepository.GetBooksByIsbn(isbn);
             //if (cat == null) return NotFound();
             //if (cat == null)
