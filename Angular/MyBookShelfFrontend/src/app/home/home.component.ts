@@ -47,7 +47,19 @@ export class HomeComponent implements OnInit{
         this.userCredentials = response
         console.log(this.userCredentials)
       })
+
+      const storedData = localStorage.getItem('bookData');
+      if (storedData) {
+        this.bookData = JSON.parse(storedData);
+      } else {
+        this.bookService.getBookByIsbn().subscribe(data => {
+          this.bookData = data;
+          localStorage.setItem('bookData', JSON.stringify(data));
+        });
+      }
   }
+  bookData:any
+
   getBooks() {
     return this.bookService.getAllBooks().subscribe(
       (response:any) => {
@@ -81,6 +93,12 @@ export class HomeComponent implements OnInit{
   }
   viewBook(isbn: string) {
     this.bookService.isbn = isbn
-    this.router.navigate([`viewBook/:${isbn}`])
+    localStorage.setItem('bookIsbn', isbn)
+    this.bookService.getBookByIsbn().subscribe(
+      data => {
+        localStorage.setItem('bookData', JSON.stringify(data));
+        this.router.navigate([`viewBook/:${isbn}`])
+      }
+    )
   }
 }

@@ -50,7 +50,7 @@ export class ViewBookComponent implements OnInit{
     this.getCurrentUser()
     //console.log(this.form.value)
   }
-  currentBook:any 
+  currentBook:any = {}
   aboutBook = true
   showAboutBook() {
     this.commentsActive = false
