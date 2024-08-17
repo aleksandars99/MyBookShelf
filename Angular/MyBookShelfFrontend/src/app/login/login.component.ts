@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ import { UserService } from '../../Services/user.service';
 })
 export class LoginComponent implements OnInit {
   form!: FormGroup
+  loginError:string = ''
 
   constructor(
     private router: Router,
@@ -31,7 +33,11 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.user.login(this.form.getRawValue())
-    .subscribe( () => this.router.navigate(['/home']));
+    .subscribe( () => this.router.navigate(['/home']),
+    error => {
+      this.loginError = 'Wrong credentials'
+    }
+  );
   }
 
   // getUserWithRoles() {

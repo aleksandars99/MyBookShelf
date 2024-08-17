@@ -6,6 +6,7 @@ import { BookService } from '../../Services/book.service';
 import { response } from 'express';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../Services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-book',
@@ -17,7 +18,7 @@ import { UserService } from '../../Services/user.service';
 export class ViewBookComponent implements OnInit{
 
   form!: FormGroup
-  constructor(private bookService: BookService, private userService: UserService) {
+  constructor(private bookService: BookService, private userService: UserService, private router: Router) {
 
   }
   initializeForm() {
@@ -43,6 +44,9 @@ export class ViewBookComponent implements OnInit{
         console.log(response)
       }
     )
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
   }
 
   ngOnInit(): void {
@@ -87,24 +91,24 @@ export class ViewBookComponent implements OnInit{
     }
   }
 
-  cutPrice(price:string):string {
+  cutPrice(price:any = {}):string {
     return price.split(' ')[0]
   }
-  cutPriceEur(price:any):any {
+  cutPriceEur(price:any = {}):any {
     const priceNumber = parseFloat(price.split(' ')[0]); 
     const conversionRate = 0.0085; 
     const priceInEUR = priceNumber * conversionRate; 
     const flooredPriceInEUR = Math.floor(priceInEUR); 
     return flooredPriceInEUR.toString(); 
   }
-  cutPriceBam(price:any):any {
+  cutPriceBam(price:any = {}):any {
     const priceNumber = parseFloat(price.split(' ')[0]); 
     const conversionRate = 0.017; 
     const priceInEUR = priceNumber * conversionRate; 
     const flooredPriceInEUR = Math.floor(priceInEUR); 
     return flooredPriceInEUR.toString(); 
   }
-  cutPriceMkd(price:any):any {
+  cutPriceMkd(price:any = {}):any {
     const priceNumber = parseFloat(price.split(' ')[0]); 
     const conversionRate = 0.53; 
     const priceInMKD = priceNumber * conversionRate; 
@@ -159,4 +163,7 @@ export class ViewBookComponent implements OnInit{
   // addComment() {
   //   this.bookService.comment()
   // }
+  homePage() {
+    this.router.navigate(['home'])
+  }
 }

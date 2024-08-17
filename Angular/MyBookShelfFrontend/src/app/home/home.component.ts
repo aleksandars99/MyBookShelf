@@ -71,10 +71,15 @@ export class HomeComponent implements OnInit{
       }
     )
   }
-  getBookByIsbn(isbn: string) {
-    console.log(isbn)
+  editBookByIsbn(isbn: string) {
     this.bookService.isbn = isbn;
-    this.router.navigate([`editBook/:${isbn}`])
+    localStorage.setItem('bookIsbn', isbn)
+    this.bookService.getBookByIsbn().subscribe(
+      data => {
+        localStorage.setItem('bookData', JSON.stringify(data));
+        this.router.navigate([`editBook/:${isbn}`])
+      }
+    )
   }
   deleteBook(isbn: string) {
     const confirmed = window.confirm('Are you sure u want to delete this book?')
