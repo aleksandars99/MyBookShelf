@@ -14,6 +14,7 @@ namespace MyBookShelfBackend.Data
         public DbSet<Users> Users { get; set; }
         public DbSet<Books> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Author> Author { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -21,7 +22,6 @@ namespace MyBookShelfBackend.Data
 
             builder.Entity<Books>(entity =>
             {
-                entity.Property(e => e.Author).HasMaxLength(50);
                 entity.Property(e => e.Rating).HasColumnType("decimal(4, 1");
                 entity.Property(e => e.Price).HasMaxLength(10);
                 entity.Property(e => e.PageNumber).HasMaxLength(5);
@@ -33,6 +33,12 @@ namespace MyBookShelfBackend.Data
             builder.Entity<Users>(entity =>
             {
                 entity.HasIndex(e => e.Email).IsUnique();
+            });
+            builder.Entity<Author>(entity =>
+            {
+                entity.HasMany(b => b.Books)
+                .WithOne(a => a.Author)
+                .HasForeignKey(a => a.AuthorId);
             });
         }
 

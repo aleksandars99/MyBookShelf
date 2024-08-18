@@ -19,6 +19,9 @@ export class BookService {
   //   return this.http.get('https://localhost:7025/api/userRoles', {withCredentials: true})
   // }
   isbn: string = ''
+  addBook(data: any):Observable<any> {
+    return this.http.post('https://localhost:7025/api/create', data)
+  }
   getBookByIsbn() {
     const sbn = localStorage.getItem('bookIsbn')
     return this.http.get(`https://localhost:7025/api/getBook/${sbn}`, {withCredentials: true});

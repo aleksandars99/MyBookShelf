@@ -24,7 +24,12 @@
             <!-- <input [(ngModel)]="currentBook.title" type="text" id="large-input" class="bg-gray-50 border inline border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-24 p-1 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500"/> -->
             <input [(ngModel)]="currentBook.title" formControlName="Title" type="text" id="large-input" class="block w-80 p-1 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <!-- <button class="font-bold text-2xl ml-2 text-gray-900 mb-2">{{currentBook.author}}</button> -->
-            <input [(ngModel)]="currentBook.author" formControlName="author" type="text" id="large-input" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <input [(ngModel)]="currentBook.author" formControlName="authorId" type="text" id="large-input" class="block w-full p-2.5 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <select formControlName="authorId" type="text" id="authorName" class="bg-gray-50 w-11/12 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="" disabled selected>Select an author</option>
+                <option *ngFor="let author of authorList" [value]="author.id">{{author.name}}</option>
+            </select>
+            
             <!-- <h3 class="mb-1 ml-2" >Categories: {{currentBook.categories}}</h3> -->
             <label for="categories" class="ml-2">Change category</label>
             <select id="categories" [(ngModel)]="currentBook.categories" formControlName="categories" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg ml-3 focus:ring-blue-500 focus:border-blue-500 w-2/3 p-1 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">

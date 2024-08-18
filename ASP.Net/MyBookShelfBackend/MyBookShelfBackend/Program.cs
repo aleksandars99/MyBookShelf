@@ -32,6 +32,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IPhotoService, PhotoService>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 builder.Services.AddTransient<IPhotoService, PhotoService>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddHttpContextAccessor();

@@ -23,29 +23,18 @@ namespace MyBookShelfBackend.Data
                 var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
                 if (adminUser == null)
                 {
+                    var hashedPassword = BCrypt.Net.BCrypt.HashPassword("Aleksandar@1234");
+                    
                     var newAdminUser = new Users()
                     {
                         UserName = "Aleksandardev",
                         Email = adminUserEmail,
-                        EmailConfirmed = true
+                        EmailConfirmed = true,
+                        PasswordHash = hashedPassword
                     };
-                    await userManager.CreateAsync(newAdminUser, "Aleksandar@1234");
+
+                    await userManager.CreateAsync(newAdminUser);
                     await userManager.AddToRoleAsync(newAdminUser, Roles.Admin);
-                }
-
-                var userEmail = "acostojanovic22@gmail.com";
-
-                var appUser = await userManager.FindByEmailAsync(userEmail);
-                if (appUser == null)
-                {
-                    var newAppUser = new Users()
-                    {
-                        UserName = "acostojanovic",
-                        Email = userEmail,
-                        EmailConfirmed = true
-                    };
-                    await userManager.CreateAsync(newAppUser, "Aleksandar@1234");
-                    await userManager.AddToRoleAsync(newAppUser, Roles.User);
                 }
 
             }

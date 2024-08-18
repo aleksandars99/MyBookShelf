@@ -72,15 +72,29 @@
                 <h1 class="text-gray-900 pb-2 text-4xl font-bold">General Information</h1>
                 <br>
                     <div class="mb-6 pb-1">
-                        <div class="grid grid-cols-2">
-                            <div>
+                        <div class="w-full grid grid-cols-2 rounded-md ">
+                                <div>
+                                    <label for="title" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Title</label>
+                                    <input formControlName="title" type="text" id="releaseDate" class="bg-gray-50 w-11/12 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">        
+                                </div>
+                                <div>
+                                    <label for="authorName" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Author</label>
+                                    <select formControlName="authorId" type="text" id="authorName" class="bg-gray-50 w-11/12 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option value="" disabled selected>Select an author</option>
+                                        <option *ngFor="let author of authorList" [value]="author.id">{{author.name}}</option>
+                                    </select>                   
+                                </div>
+                            <!-- <div>
                                 <label for="title" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Book name</label>
-                                <input formControlName="title" type="text" id="title" class="bg-gray-50 w-96 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <input formControlName="title" type="text" id="title" class="bg-gray-50 w-80 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             </div>
                             <div>
                                 <label for="authorName" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Author name</label>
                                 <input formControlName="author" type="text" id="authorName" class="bg-gray-50 w-full border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            </div>
+                                <select id="authorName" formControlName="author" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-100 dark:border-gray-600 dark:placeholder-gray-600 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="Action">Action</option>
+                                </select>
+                            </div> -->
                         </div>
                          <br>
                         <label for="description" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Description</label>

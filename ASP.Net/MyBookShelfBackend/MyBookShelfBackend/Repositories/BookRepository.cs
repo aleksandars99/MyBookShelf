@@ -35,7 +35,7 @@ namespace MyBookShelfBackend.Repositories
 
         public ICollection<Books> GetByAuthor(string author)
         {
-            return _context.Books.Where(b => b.Author == author).ToList();
+            return _context.Books.Where(b => b.Author.Name == author).ToList();
         }
 
         public async Task<Books> GetBooksByIsbn(string isbn)

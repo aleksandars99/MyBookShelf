@@ -6,6 +6,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { response } from 'express';
 import { Router } from '@angular/router';
 import { error } from 'console';
+import { AuthorService } from '../../Services/author.service';
 
 @Component({
   selector: 'app-edit-book',
@@ -21,11 +22,11 @@ export class EditBookComponent implements OnInit {
   currencyVal: string = 'RSD'
   form!: FormGroup
 
-  constructor(private bookService: BookService, private router: Router) {
+  constructor(private bookService: BookService, private router: Router, private authorService: AuthorService ) {
     this.form = new FormGroup({
       Title: new FormControl(),
       Description: new FormControl(),
-      author: new FormControl(),
+      authorId: new FormControl(),
       price: new FormControl(),
       categories: new FormControl(),
       edition: new FormControl(),
@@ -38,6 +39,7 @@ export class EditBookComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.bookService.isbn)
     this.getCurrentBook()
+    this.returnAuthors()
   }
   currentBook:any
   getCurrentBook() {
@@ -179,7 +181,7 @@ export class EditBookComponent implements OnInit {
     const data = {
       Title: this.form.get('Title')?.value,
       Description: this.form.get('Description')?.value,
-      author: this.form.get('author')?.value,
+      authorId: this.form.get('authorId')?.value,
       price: this.form.get('price')?.value,
       categories: this.form.get('categories')?.value,
       edition: this.form.get('edition')?.value,
@@ -205,6 +207,17 @@ export class EditBookComponent implements OnInit {
     console.log(this.form.getRawValue())
   }
 
+
+  authorList:any[] = []
+  returnAuthors() {
+    this.authorService.getAuthors().subscribe(
+      response=> {
+        console.log(response)
+        this.authorList = response
+        console.log('list of authors: ', this.authorList)
+      }
+    )
+  }
 
   
 }

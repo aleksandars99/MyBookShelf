@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MyBookShelfBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca603e7568bf46fe5a4afaacf7fc7b018bde4706")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dc84892b795a0c99ef92b2d2bc9386eafe70ad42")]
 [assembly: System.Reflection.AssemblyProductAttribute("MyBookShelfBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MyBookShelfBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

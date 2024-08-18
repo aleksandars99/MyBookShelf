@@ -8,6 +8,9 @@ import { Book } from '../Book';
 import { image } from '@cloudinary/url-gen/qualifiers/source';
 import { response } from 'express';
 import { Observable } from 'rxjs';
+import { BookService } from '../../Services/book.service';
+import { AuthorService } from '../../Services/author.service';
+import { CommonModule } from '@angular/common';
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -16,7 +19,7 @@ class ImageSnippet {
 @Component({
   selector: 'app-add-book',
   standalone: true,
-  imports: [HttpClientModule, FormsModule, ReactiveFormsModule, CloudinaryModule],
+  imports: [HttpClientModule, FormsModule, ReactiveFormsModule, CloudinaryModule, CommonModule],
   templateUrl: './add-book.component.html',
   styleUrl: './add-book.component.css'
 })
@@ -27,12 +30,12 @@ export class AddBookComponent  implements OnInit{
   form!: FormGroup;
   
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private router: Router, private bookService: BookService, private authorService: AuthorService) {
     this.form = new FormGroup({
       title: new FormControl(),
       description: new FormControl(),
       image: new FormControl(),
-      author: new FormControl(),
+      authorId: new FormControl(),
       price: new FormControl(),
       categories: new FormControl(),
       edition: new FormControl(),
@@ -110,7 +113,7 @@ export class AddBookComponent  implements OnInit{
       title: this.form.get('title')?.value,
       description: this.form.get('description')?.value,
       image: this.cloudinaryUrl,
-      author: this.form.get('author')?.value,
+      authorId: this.form.get('authorId')?.value,
       price: this.form.get('price')?.value,
       categories: this.form.get('categories')?.value,
       edition: this.form.get('edition')?.value,
@@ -122,7 +125,7 @@ export class AddBookComponent  implements OnInit{
     // no image in JSON
     }
 
-    this.http.post<any>('https://localhost:7025/api/create', data)
+    this.bookService.addBook(data)
     .subscribe(response => {
       console.log(this.form.value)
       this.router.navigate(['/home']);
@@ -135,5 +138,17 @@ export class AddBookComponent  implements OnInit{
         cloudName: 'dl5u5xg4i'
       }
     });
+    this.returnAuthors()
+  }
+
+  authorList:any[] = []
+  returnAuthors() {
+    this.authorService.getAuthors().subscribe(
+      response=> {
+        console.log(response)
+        this.authorList = response
+        console.log('list of authors: ', this.authorList)
+      }
+    )
   }
 }

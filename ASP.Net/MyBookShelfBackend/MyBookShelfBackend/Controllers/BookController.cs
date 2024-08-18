@@ -26,6 +26,7 @@ namespace MyBookShelfBackend.Controllers
         private readonly UserManager<Users> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly JwtService _jwtService;
+        private readonly IAuthorRepository _authorRepository;
         public BookController(
             AppDbContext appDbContext, 
             IBookRepository bookRepository, 
@@ -35,7 +36,8 @@ namespace MyBookShelfBackend.Controllers
             RoleManager<IdentityRole> roleManager,
             UserManager<Users> userManager,
             IUserRepository userRepository,
-            JwtService jwtService
+            JwtService jwtService,
+            IAuthorRepository authorRepository
             )
         {
             _context = appDbContext;
@@ -47,6 +49,7 @@ namespace MyBookShelfBackend.Controllers
             _userManager = userManager;
             _userRepository = userRepository;
             _jwtService = jwtService;
+            _authorRepository = authorRepository;
         }
         [HttpPost(template: "create")]
         public async Task<IActionResult> Create ([FromBody] AddBookDto dto)
@@ -54,12 +57,15 @@ namespace MyBookShelfBackend.Controllers
             //var res = await _photoService.AddPhotoAsync(dto.Image);
             Console.WriteLine(await _photoService.AddPhotoAsync(dto.Image));
 
+            var author = await _authorRepository.GetByIdAsync(dto.AuthorId);
+            if (author == null) { return NotFound("Author not found"); }
+
             var book = new Books
             {
                 Title = dto.Title,
                 Description = dto.Description,
                 Image = /*res.Url.ToString(),*/ dto.Image,
-                Author = dto.Author,
+                Author = author,
                 Price = dto.Price,
                 Categories = dto.Categories,
                 Edition = dto.Edition,
@@ -87,20 +93,14 @@ namespace MyBookShelfBackend.Controllers
         [HttpPut(template:"edit/{isbn}")]
         public async Task<IActionResult> Edit (string isbn,[FromBody] EditBookDto dto)
         {
+            var author = await _authorRepository.GetByIdAsync(dto.AuthorId);
+            if (author == null) { return NotFound("Author not found"); }
 
-            //var book = _context.Books.Find(isbn);
-            //var book = await _bookRepository.GetBooksByIsbn(isbn);
-
-            //var image =  await _photoService.AddPhotoAsync(dto.Image);
-            //if (book is null)
-            //{
-            //    return NotFound();
-            //}
             var book = await _bookRepository.GetBooksByIsbn(isbn);
             if (book == null) return NotFound();
             book.Title = dto.Title;
             book.Description = dto.Description;
-            book.Author = dto.Author;
+            book.Author = author;
             book.Price = dto.Price;
             book.Categories = dto.Categories;
             book.Edition = dto.Edition;
