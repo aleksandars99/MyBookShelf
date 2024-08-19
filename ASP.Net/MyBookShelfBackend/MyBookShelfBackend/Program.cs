@@ -63,7 +63,16 @@ builder.Services.AddControllersWithViews()
 //    options.IdleTimeout = TimeSpan.FromMinutes(30);
 //    options.Cookie.HttpOnly = true;
 //    options.Cookie.IsEssential = true;
+//    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+//    options.Cookie.SameSite = SameSiteMode.None;
 //});
+
+//var cookieOptions = new CookieOptions
+//{
+//    HttpOnly = true,
+//    Secure = true, // Ensure this is true if you're using HTTPS
+//    SameSite = SameSiteMode.None // Adjust based on your needs
+//};
 
 
 var app = builder.Build();
@@ -92,6 +101,8 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseCors(MyAllowSpecificOrigins);
+
+
 
 app.MapControllers();
 

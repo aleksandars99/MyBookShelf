@@ -1,8 +1,11 @@
+import { Author } from "./Author";
+
 export interface Book {
     title: string;
     description: string;
     image: File;
-    author: string;
+    authorId: number;
+    author: Author;
     rating: number;
     price: string
     category: string[];

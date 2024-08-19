@@ -16,6 +16,7 @@
                 <a routerLink="/settings" class="text-lg text-white cursor-pointer">My Books</a>
                 <a routerLink="/profile" class="text-lg text-white cursor-pointer">Profile</a>
             </div>
+            <a *ngIf="credRole == 'admin'" routerLink="/adminDashboard" class="text-white cursor-pointer text-lg">Admin Dashboard</a>
             <a routerLink="/login" (click)="logout()" class="text-lg  text-white cursor-pointer">Logout</a>
         </div>
     </div>

@@ -27,7 +27,7 @@ export class BookService {
     return this.http.get(`https://localhost:7025/api/getBook/${sbn}`, {withCredentials: true});
   }
   getAllBooks():Observable<any> {
-    return this.http.get("https://localhost:7025/api/AllBooks", {withCredentials: true})
+    return this.http.get("https://localhost:7025/api/GetAll", {withCredentials: true})
   }
   updateBook(data: Book, isbn: string):Observable<any> {
     return this.http.put(`https://localhost:7025/api/edit/${isbn}`, data)

@@ -28,7 +28,17 @@ export class NavbarComponent implements OnInit{
         this.authenticated = auth;
       }
     )
+
+    this.userService.getUserRoles().subscribe(
+      response=> {
+        this.userCredentials = response
+        this.credRole = response.roles
+        console.log(this.credRole, 'role')
+        console.log(this.userCredentials)
+      })
+      this.credRole
   }
+  credRole :any
   logout() {
     this.userService.logout()
     .subscribe( () => this.authenticated = false)
@@ -40,4 +50,8 @@ export class NavbarComponent implements OnInit{
       }
     )
   }
+
+  userCredentials:any = {}
+
+  
 }

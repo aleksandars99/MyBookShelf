@@ -77,17 +77,18 @@ namespace MyBookShelfBackend.Controllers
             };
             return Created("Success", _bookRepository.CreateBook(book));
         }
-        [HttpGet(template:"AllBooks")]
-        public async Task<IActionResult> GetAll()
-        {
-            var books = await _bookRepository.GetAllBooks();
-            return Ok(books);
-        }
+        //[HttpGet(template:"AllBooks")]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    var books = await _bookRepository.GetAllBooks();
+        //    return Ok(books);
+        //}
         [HttpGet(template:"GetAll")]
         public async Task<IEnumerable<Books>>GetallBooks()
         {
             return await _context.Books
                 .Include(b => b.Comments)
+                .Include(b => b.Author)
                 .ToListAsync();
         }
         [HttpPut(template:"edit/{isbn}")]
@@ -139,11 +140,14 @@ namespace MyBookShelfBackend.Controllers
         }
 
         [HttpGet(template:"getBook/{isbn}")]
-        public async Task<IActionResult>GetBookByIsbn (string isbn)
+        public async Task<Books?>GetBookByIsbn (string isbn)
         {
-           var res = await _bookRepository.GetBooksByIsbn(isbn);
-            if (res == null) return NotFound();
-            return Ok(res);
+            //var res = await _bookRepository.GetBooksByIsbn(isbn);
+            //if (res == null) return NotFound();
+            //return Ok(res);
+            return await _context.Books
+                .Include(b => b.Author)
+                .FirstOrDefaultAsync(b => b.ISBN == isbn);
         }
 
         [HttpPost(template:"addComment")]

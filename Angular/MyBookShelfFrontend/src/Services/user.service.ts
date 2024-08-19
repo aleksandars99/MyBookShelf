@@ -10,7 +10,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUserWithRoles(id: number):Observable<any> {
-    return this.http.get(`https://localhost:7025/api/getUserWithRole/${id}`);
+    return this.http.get(`https://localhost:7025/api/getUserWithRole/${id}`, {withCredentials: true});
   }
   login(data: any):Observable<any> {
     return this.http.post('https://localhost:7025/api/login', data, { withCredentials: true });

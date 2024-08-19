@@ -7,6 +7,8 @@ import { CloudinaryModule } from '@cloudinary/ng';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../Services/user.service';
 import { CommonModule } from '@angular/common';
+import { BookService } from '../../Services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -19,7 +21,11 @@ export class AdminDashboardComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private authorService: AuthorService) {
+  constructor(
+    private authorService: AuthorService,
+    private userService: UserService,
+    private bookService: BookService,
+    private router: Router) {
     
   }
   img!: CloudinaryImage;
@@ -114,6 +120,8 @@ export class AdminDashboardComponent implements OnInit {
     })
 
     this.getAllAuthors();
+    this.getUserCredentials();
+    this.getBooks();
   }
 
   allAuthors: any[] = []
@@ -157,6 +165,111 @@ export class AdminDashboardComponent implements OnInit {
       )
     }
   }
+  
+  userRole: any
+  getUserCredentials() {
+    return this.userService.getUserRoles().subscribe(
+      response=> {
+        this.userRole = response.roles
+        console.log(this.userRole)
+      }
+    )
+  }
+
+  allBooks:any[] = []
+  getBooks() {
+    this.bookService.getAllBooks().subscribe(
+      response=> {
+        this.allBooks = response
+        console.log(this.allBooks, 'all books')
+      }
+    )
+  }
+
+  authorsPage = true;
+  booksPage = false;
+  userPage = false;
+  accountControlerPage = false;
+
+  openAuthors() {
+    this.authorsPage = true;
+    this.booksPage = false;
+    this.userPage = false;
+    this.accountControlerPage = false;
+  }
+  openBooks() {
+    this.authorsPage = false;
+    this.booksPage = true;
+    this.userPage = false;
+    this.accountControlerPage = false;
+  }
+  openUsers() {
+    this.authorsPage = false;
+    this.booksPage = false;
+    this.userPage = true;
+    this.accountControlerPage = false;
+  }
+  openAccountController() {
+    this.authorsPage = false;
+    this.booksPage = false;
+    this.userPage = false;
+    this.accountControlerPage = true;
+  }
+
+  currentBook:any = {}
+  getEdition(edition: any) {
+    if (this.currentBook.edition === 0) {
+      return this.currentBook.edition = 'Hardcover'
+    }
+    else if (this.currentBook.edition === 1) {
+      return this.currentBook.edition = 'Paperback'
+    }
+    else if (this.currentBook.edition === 2) {
+      return this.currentBook.edition = 'eBook'
+    }
+    else {
+      return this.currentBook.edition = 'Audiobook'
+    }
+  }
+
+  viewBook(isbn: string) {
+    this.bookService.isbn = isbn
+    localStorage.setItem('bookIsbn', isbn)
+    this.bookService.getBookByIsbn().subscribe(
+      data => {
+        localStorage.setItem('bookData', JSON.stringify(data));
+        this.router.navigate([`viewBook/:${isbn}`])
+      }
+    )
+  }
+
+  editBookByIsbn(isbn: string) {
+    this.bookService.isbn = isbn;
+    localStorage.setItem('bookIsbn', isbn)
+    this.bookService.getBookByIsbn().subscribe(
+      data => {
+        localStorage.setItem('bookData', JSON.stringify(data));
+        this.router.navigate([`editBook/:${isbn}`])
+      }
+    )
+  }
+
+  deleteBook(isbn: string) {
+    const confirmed = window.confirm('Are you sure u want to delete this book?')
+    if (confirmed) {
+      this.bookService.deleteBook(isbn).subscribe(
+        response => {
+          location.reload();
+          console.log(response)
+        }
+      )
+    }
+    else {
+      console.log('delete canceled')
+    }
+    
+  }
+
   
 
 }

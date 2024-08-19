@@ -29,6 +29,10 @@ namespace MyBookShelfBackend.Data
                 entity.HasMany(b => b.Comments)
                 .WithOne(c => c.book)
                 .HasForeignKey(c => c.BookId);
+
+                entity.HasOne(c => c.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId);
             });
             builder.Entity<Users>(entity =>
             {

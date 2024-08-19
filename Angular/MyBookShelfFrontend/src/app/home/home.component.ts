@@ -65,6 +65,13 @@ export class HomeComponent implements OnInit{
       (response:any) => {
         this.allBooks = response
         console.log('bks', this.allBooks)
+        this.allBooks.forEach((book:any) => {
+          if (book.author) {
+            console.log(`Author of "${book.title}": ${book.author.name}`);
+          } else {
+            console.log(`No author found for "${book.title}"`);
+          }
+        })
       },
         error => {
         console.log(error);

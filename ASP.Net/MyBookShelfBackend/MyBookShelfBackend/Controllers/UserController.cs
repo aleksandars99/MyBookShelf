@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MyBookShelfBackend.Data;
 using MyBookShelfBackend.Dtos;
 using MyBookShelfBackend.Helpers;
@@ -67,7 +68,10 @@ namespace MyBookShelfBackend.Controllers
 
             Response.Cookies.Append("jwt", _jwt, new CookieOptions
             {
-                HttpOnly = true
+                HttpOnly = true,
+                IsEssential = true,
+                Secure = true,
+                SameSite = SameSiteMode.None,
             });
 
             return Ok(new
