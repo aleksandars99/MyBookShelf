@@ -9,6 +9,7 @@ import { UserService } from '../../Services/user.service';
 import { CommonModule } from '@angular/common';
 import { BookService } from '../../Services/book.service';
 import { Router } from '@angular/router';
+import { response } from 'express';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -20,13 +21,14 @@ import { Router } from '@angular/router';
 export class AdminDashboardComponent implements OnInit {
 
   form!: FormGroup;
+  userForm!: FormGroup
 
   constructor(
     private authorService: AuthorService,
     private userService: UserService,
     private bookService: BookService,
     private router: Router) {
-    
+   
   }
   img!: CloudinaryImage;
   selectedFile!: File;
@@ -119,9 +121,28 @@ export class AdminDashboardComponent implements OnInit {
       isForeign: new FormControl(false)
     })
 
+    this.userForm = new FormGroup({
+      firstName: new FormControl,
+      lastName: new FormControl,
+      userName: new FormControl,
+      phoneNumber: new FormControl,
+    })
+
     this.getAllAuthors();
     this.getUserCredentials();
     this.getBooks();
+    this.getAllUsers()
+    this.getUser();
+  }
+
+  currentlyLoggedUser: any
+  getUser() {
+    this.userService.getUser().subscribe(
+      response=> {
+        this.currentlyLoggedUser = response
+        console.log(this.currentlyLoggedUser)
+      }
+    )
   }
 
   allAuthors: any[] = []
@@ -167,11 +188,14 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   userRole: any
+  usersrolesall: any
   getUserCredentials() {
     return this.userService.getUserRoles().subscribe(
       response=> {
         this.userRole = response.roles
+        this.usersrolesall = response
         console.log(this.userRole)
+        console.log('all roles users', this.usersrolesall)
       }
     )
   }
@@ -214,6 +238,12 @@ export class AdminDashboardComponent implements OnInit {
     this.booksPage = false;
     this.userPage = false;
     this.accountControlerPage = true;
+     this.userForm.patchValue({
+        firstName: this.currentlyLoggedUser.firstName,
+        lastName: this.currentlyLoggedUser.lastName,
+        userName: this.currentlyLoggedUser.userName,
+        phoneNumber: this.currentlyLoggedUser.phoneNumber,
+      })
   }
 
   currentBook:any = {}
@@ -270,6 +300,35 @@ export class AdminDashboardComponent implements OnInit {
     
   }
 
-  
+  allUsers:any[] = []
+  getAllUsers() {
+    return this.userService.getAllUsers().subscribe(
+      response => {
+        this.allUsers = response
+        console.log(this.allUsers)
+      }
+    )
+  }
+
+  updateUser() {
+
+    const dataUser = {
+      firstName: this.userForm.get('firstName')?.value,
+      lastName: this.userForm.get('lastName')?.value,
+      userName: this.userForm.get('userName')?.value,
+      phoneNumber: this.userForm.get('phoneNumber')?.value
+    }
+
+    this.userService.updateUser(dataUser).subscribe(
+      response=> {
+        console.log(dataUser)
+        console.log('User update sucessful')
+      }
+    )
+
+    setTimeout(() => {
+      location.reload();
+    }, 1000);
+  }
 
 }

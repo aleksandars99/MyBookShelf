@@ -15,5 +15,5 @@ export const routes: Routes = [
     {path: 'addBook', component: AddBookComponent},
     {path: 'editBook/:isbn', component: EditBookComponent},
     {path: 'viewBook/:isbn', component: ViewBookComponent},
-    {path: 'adminDashboard', component: AdminDashboardComponent}
+    {path: 'dashboard', component: AdminDashboardComponent}
 ];

@@ -31,5 +31,17 @@ namespace MyBookShelfBackend.Repositories
         {
             return _appDbContext.Users.FirstOrDefault(User => User.Id == id);
         }
+        public async Task<IEnumerable<Users>> GetAllUsersAsync()
+        {
+            return await _appDbContext.Users.ToListAsync();
+        }
+        public bool SaveChanges()
+        {
+            return _appDbContext.SaveChanges() > 0;
+        }
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _appDbContext.SaveChangesAsync() > 0;
+        }
     }
 }

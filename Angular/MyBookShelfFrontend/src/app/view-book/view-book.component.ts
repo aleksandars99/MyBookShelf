@@ -18,7 +18,9 @@ import { Router } from '@angular/router';
 export class ViewBookComponent implements OnInit{
 
   form!: FormGroup
-  constructor(private bookService: BookService, private userService: UserService, private router: Router) {
+  constructor(private bookService: BookService, 
+    private userService: UserService, 
+    private router: Router) {
 
   }
   initializeForm() {

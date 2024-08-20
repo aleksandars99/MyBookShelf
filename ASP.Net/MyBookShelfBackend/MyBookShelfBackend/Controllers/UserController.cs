@@ -157,5 +157,58 @@ namespace MyBookShelfBackend.Controllers
             };
             return Ok(userWithRolesDto);
         }
+        [HttpGet(template:"getAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userRepository.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        [HttpPut(template: "updateUser")]
+        public async Task<IActionResult> UpdateUser ([FromBody]EditUserDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var jwt = Request.Cookies["jwt"];
+                if (jwt == null)
+                {
+                    return Unauthorized();
+                }
+                var token = _jwtService.Verify(jwt);
+                var userId = token.Issuer;
+
+                var user = _userRepository.GetById(userId);
+                if (user == null)
+                {
+                    return NotFound("User not found");
+                }
+
+                user.FirstName = dto.FirstName;
+                user.LastName = dto.LastName;
+                user.UserName = dto.UserName;
+                user.PhoneNumber = dto.PhoneNumber;
+
+                var result = await _userRepository.SaveChangesAsync();
+                if (result)
+                {
+                    return Ok("User updated succesfully");
+                }
+                else
+                {
+                    return StatusCode(500, "Error updating the user");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred: "+ ex.Message);
+            }
+
+        }
+
     }
 }

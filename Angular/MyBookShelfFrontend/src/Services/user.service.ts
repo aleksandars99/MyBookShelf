@@ -27,4 +27,12 @@ export class UserService {
   getUserRoles(): Observable<any> {
     return this.http.get('https://localhost:7025/api/userRoles', {withCredentials: true})
   }
+
+  getAllUsers():Observable<any> {
+    return this.http.get('https://localhost:7025/api/getAllUsers')
+  }
+
+  updateUser(data: any):Observable<any> {
+    return this.http.put('https://localhost:7025/api/updateUser', data, {withCredentials: true})
+  }
 }

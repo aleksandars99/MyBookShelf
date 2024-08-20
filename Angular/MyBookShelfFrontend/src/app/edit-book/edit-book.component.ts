@@ -22,7 +22,10 @@ export class EditBookComponent implements OnInit {
   currencyVal: string = 'RSD'
   form!: FormGroup
 
-  constructor(private bookService: BookService, private router: Router, private authorService: AuthorService ) {
+  constructor(private bookService: BookService, 
+    private router: Router, 
+    private authorService: AuthorService 
+    ) {
     this.form = new FormGroup({
       Title: new FormControl(),
       Description: new FormControl(),
