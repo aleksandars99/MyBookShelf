@@ -36,7 +36,9 @@ export class EditBookComponent implements OnInit {
       pageNumber: new FormControl(),
       alphabet: new FormControl(),
       releaseDate: new FormControl(),
-      isbn: new FormControl()
+      isbn: new FormControl(),
+      isNew: new FormControl(),
+      isTrending: new FormControl(),
     })
   }
   ngOnInit(): void {
@@ -192,6 +194,8 @@ export class EditBookComponent implements OnInit {
       alphabet: this.form.get('alphabet')?.value,
       releaseDate: this.form.get('releaseDate')?.value,
       isbn: this.form.get('isbn')?.value,
+      isNew: this.form.get('isNew')?.value,
+      isTrending: this.form.get('isTrending')?.value,
     }
 
     console.log("data", data)

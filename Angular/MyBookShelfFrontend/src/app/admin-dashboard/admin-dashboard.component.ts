@@ -93,6 +93,9 @@ export class AdminDashboardComponent implements OnInit {
         .subscribe(response => {
           console.log(this.form.value)
           this.formReset()
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         });
       } 
     }
@@ -329,6 +332,10 @@ export class AdminDashboardComponent implements OnInit {
     setTimeout(() => {
       location.reload();
     }, 1000);
+  }
+
+  addBook() {
+    this.router.navigate(['/addBook'])
   }
 
 }

@@ -21,5 +21,7 @@ namespace MyBookShelfBackend.Models
         public DateTime? ReleaseDate { get; set; }
         public string? YoutubeLink { get; set; }
         public string? ISBN { get; set; }
+        public bool? IsNew { get; set; }
+        public bool? isTrending { get; set; }
     }
 }

@@ -43,7 +43,9 @@ export class AddBookComponent  implements OnInit{
       alphabet: new FormControl(),
       releaseDate: new FormControl(),
       youtubeLink: new FormControl(), 
-      isbn: new FormControl()
+      isbn: new FormControl(),
+      isNew: new FormControl(),
+      isTrending: new FormControl(),
     })
   }
   
@@ -122,6 +124,8 @@ export class AddBookComponent  implements OnInit{
       releaseDate: this.form.get('releaseDate')?.value,
       youtubeLink: this.form.get('youtubeLink')?.value,
       isbn: this.form.get('isbn')?.value,
+      isNew: this.form.get('isNew')?.value,
+      isTrending: this.form.get('isTrending')?.value,
     // no image in JSON
     }
 

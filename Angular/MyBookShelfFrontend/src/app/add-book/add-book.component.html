@@ -52,7 +52,7 @@
             <br>
             <div class="p-5 w-full grid grid-cols-2 rounded-md shadow-sm border-2 bg-white">
                 <div>
-                    <label for="releaseDate" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Release date</label>
+                    <label for="releaseDate" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Release date (y-m-d)</label>
                     <input formControlName="releaseDate" type="text" id="releaseDate" class="bg-gray-50 w-3/4 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">        
                 </div>
                 <div>
@@ -119,10 +119,29 @@
             </div>
             <br>
             <div class="p-5 ml-5 w-full grid grid-cols-4 rounded-md shadow-sm border-2 bg-white">
-                <div class="col-span-3">
+                <div class="col-span-1">
                     <label for="youtubeLink" class="block mb-2 text-lg font-medium text-gray-900 dark:text-gray-600">Youtube link</label>
                     <input formControlName="youtubeLink" type="text" id="youtubeLink" class="bg-gray-50 w-full border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-100 dark:placeholder-gray-400 dark:text-gray-600 dark:focus:ring-blue-500 dark:focus:border-blue-500">                       
                 </div>
+
+                <div class="col-span-1">
+                    <div class="text-sm pl-5">
+                        <p id="helper-checkbox-text" class="text-sm font-normal dark:text-gray-900">New Book?</p>
+                    </div>
+                    <div class="flex items-center h-5 pt-5 pl-5">
+                        <input formControlName="isNew" id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                </div>
+
+                <div class="col-span-1">
+                    <div class="text-sm pl-5">
+                        <p id="helper-checkbox-text" class="text-sm font-normal dark:text-gray-900">Trending Book?</p>
+                    </div>
+                    <div class="flex items-center h-5 pt-5 pl-5">
+                        <input formControlName="isTrending" id="helper-checkbox" aria-describedby="helper-checkbox-text" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                </div>
+
                 <div class="flex flex-col items-end pt-7 mr-5">
                     <button type="submit" (click)="createBook($event)" class="px-5 py-3 text-lg font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         

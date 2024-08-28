@@ -16,5 +16,7 @@ namespace MyBookShelfBackend.Dtos
         public string? Alphabet { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public string? ISBN { get; set; }
+        public bool? IsNew { get; set; }
+        public bool? isTrending { get; set; }
     }
 }

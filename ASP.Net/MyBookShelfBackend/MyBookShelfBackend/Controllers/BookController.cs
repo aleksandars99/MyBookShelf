@@ -73,7 +73,9 @@ namespace MyBookShelfBackend.Controllers
                 Alphabet = dto.Alphabet,
                 ReleaseDate = dto.ReleaseDate,
                 YoutubeLink = dto.YoutubeLink,
-                ISBN = dto.ISBN
+                ISBN = dto.ISBN,
+                IsNew = dto.IsNew,
+                isTrending = dto.isTrending,
             };
             return Created("Success", _bookRepository.CreateBook(book));
         }
@@ -109,6 +111,8 @@ namespace MyBookShelfBackend.Controllers
             book.Alphabet = dto.Alphabet;
             book.ReleaseDate = dto.ReleaseDate;
             book.ISBN = dto.ISBN;
+            book.IsNew = dto.IsNew;
+            book.isTrending = dto.isTrending;
 
             _bookRepository.Save();
             return Ok(book);
@@ -183,6 +187,18 @@ namespace MyBookShelfBackend.Controllers
             //} 
             //cat.Comments.
 
+        }
+        [HttpGet(template:"GetNew")]
+        public async Task<List<Books>> GetNewBooks ()
+        {
+            return await _context.Books
+                .Where(b =>b.IsNew == true).Include(a => a.Author).ToListAsync();
+        }
+        [HttpGet(template:"GetTrending")] 
+        public async Task<List<Books>> GetTrending ()
+        {
+            return await _context.Books
+                .Where(b => b.isTrending == true).Include(a => a.Author).ToListAsync();
         }
     } 
 }
