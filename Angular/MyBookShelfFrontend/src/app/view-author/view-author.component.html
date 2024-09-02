@@ -1,0 +1,46 @@
+<div class="relative isolate flex items-center gap-x-6 overflow-hidden bg-gray-50 px-6 py-2.5 sm:px-3.5 sm:before:flex-1">
+    <div class="absolute left-[max(-7rem,calc(50%-52rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+      <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#000000] to-[#7f1d1d] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+    </div>
+    <div class="absolute left-[max(45rem,calc(50%+8rem))] top-1/2 -z-10 -translate-y-1/2 transform-gpu blur-2xl" aria-hidden="true">
+      <div class="aspect-[577/310] w-[36.0625rem] bg-gradient-to-r from-[#000000] to-[#7f1d1d] opacity-30" style="clip-path: polygon(74.8% 41.9%, 97.2% 73.2%, 100% 34.9%, 92.5% 0.4%, 87.5% 0%, 75% 28.6%, 58.5% 54.6%, 50.1% 56.8%, 46.9% 44%, 48.3% 17.4%, 24.7% 53.9%, 0% 27.9%, 11.9% 74.2%, 24.9% 54.1%, 68.6% 100%, 74.8% 41.9%)"></div>
+    </div>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+      <p class="text-sm leading-6 text-gray-900">
+        <strong class="font-semibold">Offer</strong><svg viewBox="0 0 2 2" class="mx-2 inline h-0.5 w-0.5 fill-current" aria-hidden="true"><circle cx="1" cy="1" r="1" /></svg>Buy Books For 25€ or 3000 rsd And Save 20%
+      </p>
+      <a (click)="homePage()" class="cursor-pointer flex-none rounded-full bg-gray-900 px-3.5 py-1 text-sm font-semibold text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-900">Find more <span aria-hidden="true">&rarr;</span></a>
+    </div>
+    <div class="flex flex-1 justify-end">
+    </div>
+  </div>
+<div class="xl:px-32 bg-slate-50 font-serif">
+    <div class="grid grid-cols-9 gap-4 p-5 pt-10 order-1 lg:order-1">
+        <div class="xxs:col-span-9 md:col-span-3 lg:col-span-3 ">
+            <img [src]="currentAuthor.image" class="sm:h-max sm:w-max mx-auto"> 
+        </div>
+     
+        <div class="xxs:col-span-9 md:col-span-9 lg:col-span-6 xxs:order-2 md:order-3 lg:order-2 xxs:mt-4 md:mt-0 xxs:text-center md:text-start xxs:border-y-6 md:border-y-0">
+            <h1 class="font-bold text-6xl ml-2 text-red-900 mb-2 xxs:pt-3 md:pt-0 xxs:pb-3 md:pb-0 ">{{currentAuthor.name}}</h1>
+            <div id="aboutBook" class=" w-full">
+                <h1 class="text-center text-2xl">Biography</h1>
+                <textarea disabled id="description" rows="20" class="block p-2.5 w-full text-md text-gray-900 bg-gray-50 rounded-lg  focus:ring-gray-500 focus:border-gray-500 dark:bg-slate-50 dark:placeholder-gray-400 dark:text-gray-800 dark:focus:border-gray-500" placeholder="Description">{{currentAuthor.biography}}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<h1 class="text-center text-red-900 text-4xl bg-slate-50">Books</h1>
+
+<div class="flex flex-wrap flex-row bg-slate-50 xl:px-32">
+    <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of currentAuthor.books">
+        <a class="relative inline-block">
+            <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+        </a>
+        <!-- in case of problems set h-auto to h-32 -->
+        <div class="p-2 h-auto overflow-hidden bg-slate-50">
+            <a>
+                <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+            </a>
+        </div>
+    </div>
+</div>

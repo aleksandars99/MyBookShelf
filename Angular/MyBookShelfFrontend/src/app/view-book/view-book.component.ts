@@ -7,6 +7,7 @@ import { response } from 'express';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../Services/user.service';
 import { Router } from '@angular/router';
+import { AuthorService } from '../../Services/author.service';
 
 @Component({
   selector: 'app-view-book',
@@ -20,6 +21,7 @@ export class ViewBookComponent implements OnInit{
   form!: FormGroup
   constructor(private bookService: BookService, 
     private userService: UserService, 
+    private authorService: AuthorService,
     private router: Router) {
 
   }
@@ -167,5 +169,20 @@ export class ViewBookComponent implements OnInit{
   // }
   homePage() {
     this.router.navigate(['home'])
+  }
+  viewAuthor(Id: number) {
+    this.authorService.id = Id;
+  }
+  loadAuthor(id: any) {
+    this.authorService.id = id
+    localStorage.setItem('authorId', id)
+    this.authorService.getAuthorById().subscribe(
+      response=> {
+        //localStorage.setItem('authorId', JSON.stringify(response));
+        this.router.navigate([`author/:${id}`])
+        // this.authorService.currentAuthor=response
+        // console.log(this.authorService.currentAuthor)
+      }
+    )
   }
 }

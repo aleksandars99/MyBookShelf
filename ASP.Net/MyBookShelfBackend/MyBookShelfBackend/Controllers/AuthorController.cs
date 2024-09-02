@@ -65,11 +65,19 @@ namespace MyBookShelfBackend.Controllers
                 .ToListAsync();
         }
 
-        [HttpGet(template:"getAuthorById/{id}")]
-        public IActionResult GetAuthor(int id)
+        [HttpGet("getAuthorById/{id}")]
+        public async Task<IActionResult> GetAuthor(int id)
         {
-            var author = _authorRepository.GetByIdAsync(id);
-            if (author == null) return NotFound();
+            //var author = await _context.Author.FindAsync(id);
+            var author =  await _context.Author
+                .Include(b => b.Books)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (author == null)
+            {
+                return NotFound();
+            }
+
             return Ok(author);
         }
 

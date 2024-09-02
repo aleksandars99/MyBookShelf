@@ -6,6 +6,7 @@ import { AddBookComponent } from './add-book/add-book.component';
 import { EditBookComponent } from './edit-book/edit-book.component';
 import { ViewBookComponent } from './view-book/view-book.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { ViewAuthorComponent } from './view-author/view-author.component';
 
 export const routes: Routes = [
     {path:'home', component: HomeComponent},
@@ -15,5 +16,6 @@ export const routes: Routes = [
     {path: 'addBook', component: AddBookComponent},
     {path: 'editBook/:isbn', component: EditBookComponent},
     {path: 'viewBook/:isbn', component: ViewBookComponent},
-    {path: 'dashboard', component: AdminDashboardComponent}
+    {path: 'dashboard', component: AdminDashboardComponent},
+    {path: 'author/:id', component: ViewAuthorComponent}
 ];

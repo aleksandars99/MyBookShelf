@@ -13,6 +13,8 @@ export class AuthorService {
 
   }
   url = 'https://api.cloudinary.com/v1_1/dl5u5xg4i/image/upload';
+  id!: number;
+  currentAuthor:any = {}
 
 
   addAuthorImage(data: any):Observable<any> {
@@ -23,8 +25,9 @@ export class AuthorService {
      return this.http.get('https://localhost:7025/api/getAllAuthors')
   }
 
-  getAuthorById(id: number):Observable<any> {
-    return this.http.get(`https://localhost:7025/api/getAuthorById/${id}`)
+  getAuthorById():Observable<any> {
+    const authorId = localStorage.getItem('authorId')
+    return this.http.get(`https://localhost:7025/api/getAuthorById/${authorId}`)
   }
 
   addAuthor(data:any):Observable<any> {
