@@ -136,6 +136,6 @@ export class HomeComponent implements OnInit{
     )
   }
   seeAllBooks() {
-    
+    this.router.navigate(['/allBooks'])
   }
 }
