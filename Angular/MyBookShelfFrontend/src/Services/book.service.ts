@@ -44,4 +44,66 @@ export class BookService {
   comment(data: any):Observable<any> {
     return this.http.post('https://localhost:7025/api/addComment', data, {withCredentials: true})
   }
+
+  getSerbianBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/SerbianBooks')
+  }
+  getForeignBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ForeignBooks')
+  }
+  ActionBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ActionBooks')
+  }
+  AdventureBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/AdventureBooks')
+  }
+  BiographyBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/BiographyBooks')
+  }
+  ChildrensBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ChildrensBooks')
+  }
+  ClassicsBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ClassicsBooks')
+  }
+  CrimeBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/CrimeBooks')
+  }
+  DramaBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/DramaBooks')
+  }
+  FantasyBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/FantasyBooks')
+  }
+  HistoryBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/HistoryBooks')
+  }
+  HorrorBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/HorrorBooks')
+  }
+  HumourBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/HumourBooks')
+  }
+  MangaBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/MangaBooks')
+  }
+  ParanormalBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ParanormalBooks')
+  }
+  PhilosophyBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/PhilosophyBooks')
+  }
+  PsychologyBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/PsychologyBooks')
+  }
+  ReligionBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ReligionBooks')
+  }
+  ScienceBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/ScienceBooks')
+  }
+  SciFiBooks():Observable<any> {
+    return this.http.get('https://localhost:7025/api/SciFiBooks')
+  }
+
 }

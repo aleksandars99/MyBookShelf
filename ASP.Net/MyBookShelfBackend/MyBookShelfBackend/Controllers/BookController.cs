@@ -188,17 +188,148 @@ namespace MyBookShelfBackend.Controllers
             //cat.Comments.
 
         }
+
         [HttpGet(template:"GetNew")]
         public async Task<List<Books>> GetNewBooks ()
         {
             return await _context.Books
                 .Where(b =>b.IsNew == true).Include(a => a.Author).ToListAsync();
         }
+
         [HttpGet(template:"GetTrending")] 
         public async Task<List<Books>> GetTrending ()
         {
             return await _context.Books
                 .Where(b => b.isTrending == true).Include(a => a.Author).ToListAsync();
         }
+
+        [HttpGet(template:"SerbianBooks")]
+        public async Task<List<Books>> GetSerbianBooks()
+        {
+            return await _context.Books.Where(a=> a.Author.isForeign != true).ToListAsync();
+        }
+
+        [HttpGet(template: "ForeignBooks")]
+        public async Task<List<Books>> GetForeignBooks()
+        {
+            return await _context.Books.Where(a => a.Author.isForeign == true).ToListAsync();
+        }
+
+        [HttpGet(template: "ActionBooks")]
+        public async Task<List<Books>> GetActionBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Action").ToListAsync();
+        }
+
+        [HttpGet(template: "AdventureBooks")]
+        public async Task<List<Books>> GetAdventureBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Adventure").ToListAsync();
+        }
+
+        [HttpGet(template: "BiographyBooks")]
+        public async Task<List<Books>> GetBiographyBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Biography").ToListAsync();
+        }
+
+        [HttpGet(template: "ChildrensBooks")]
+        public async Task<List<Books>> GetChildrensBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Children's").ToListAsync();
+        }
+
+        [HttpGet(template: "ClassicsBooks")]
+        public async Task<List<Books>> GetClassicsBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Classics").ToListAsync();
+        }
+
+        [HttpGet(template: "CrimeBooks")]
+        public async Task<List<Books>> GetCrimeBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Crime").ToListAsync();
+        }
+
+        [HttpGet(template: "DramaBooks")]
+        public async Task<List<Books>> GetDramaBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Drama").ToListAsync();
+        }
+
+
+        [HttpGet(template: "FantasyBooks")]
+        public async Task<List<Books>> GetFantasyBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Fantasy").ToListAsync();
+        }
+
+        [HttpGet(template: "HistoryBooks")]
+        public async Task<List<Books>> GetHistoryBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "History").ToListAsync();
+        }
+
+
+        [HttpGet(template: "HorrorBooks")]
+        public async Task<List<Books>> GetHorrorBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Horror").ToListAsync();
+        }
+
+        [HttpGet(template: "HumourBooks")]
+        public async Task<List<Books>> GetHumourBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Humour/Comedy").ToListAsync();
+        }
+
+
+        [HttpGet(template: "MangaBooks")]
+        public async Task<List<Books>> GetMangaBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Manga").ToListAsync();
+        }
+
+        [HttpGet(template: "ParanormalBooks")]
+        public async Task<List<Books>> GetParanormalBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Paranormal").ToListAsync();
+        }
+
+
+        [HttpGet(template: "PhilosophyBooks")]
+        public async Task<List<Books>> GetPhilosophyBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Philosophy").ToListAsync();
+        }
+
+        [HttpGet(template: "PsychologyBooks")]
+        public async Task<List<Books>> GetPsychologyBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Psychology").ToListAsync();
+        }
+
+
+        [HttpGet(template: "ReligionBooks")]
+        public async Task<List<Books>> GetReligionBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Religion").ToListAsync();
+        }
+
+        [HttpGet(template: "ScienceBooks")]
+        public async Task<List<Books>> GetScienceBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Science").ToListAsync();
+        }
+
+
+        [HttpGet(template: "SciFiBooks")]
+        public async Task<List<Books>> GetSciFiBooks()
+        {
+            return await _context.Books.Where(b => b.Categories == "Sci-Fi").ToListAsync();
+        }
+
+
+
     } 
 }
