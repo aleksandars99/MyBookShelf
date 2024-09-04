@@ -46,7 +46,9 @@ export class AllBooksComponent implements OnInit{
     this.PsychologyBooks();
     this.ReligionBooks();
     this.ScienceBooks();
-    this.sciFiBooks();
+    this.SciFiBooks();
+    this.nameDescending();
+    this.nameAscending();
     
     this.userService.getUserRoles().subscribe(
       response=> {
@@ -76,6 +78,8 @@ export class AllBooksComponent implements OnInit{
   religionBooks:any = []
   scienceBooks:any = []
   sciFiBooks:any = []
+  sortByNameDescending:any = []
+  sortByNameAscending:any = []
 
   getBooks() {
     return this.bookService.getAllBooks().subscribe(
@@ -130,13 +134,13 @@ export class AllBooksComponent implements OnInit{
   getSerbianBooks() {
     this.bookService.getSerbianBooks().subscribe(response => {
       this.serbianBooks = response
-      console.log(this.serbianBooks)
+      //console.log(this.serbianBooks)
     })
   }
   getForeignBooks() {
     this.bookService.getForeignBooks().subscribe(response => {
       this.foreignBooks = response
-      console.log(this.foreignBooks)
+      //console.log(this.foreignBooks)
     })
   }
 
@@ -145,7 +149,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ActionBooks().subscribe(
       response => {
         this.actionBooks = response
-        console.log(this.actionBooks)
+        console.log("Action Books", this.actionBooks)
       }
     )
   }
@@ -154,7 +158,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.AdventureBooks().subscribe(
       response => {
         this.adventureBooks = response
-        console.log(this.adventureBooks)
+        console.log("Adventure Books", this.adventureBooks)
       }
     )
   }
@@ -163,7 +167,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.BiographyBooks().subscribe(
       response => {
         this.biographyBooks = response
-        console.log(this.biographyBooks)
+        console.log("Biography Books", this.biographyBooks)
       }
     )
   }
@@ -172,7 +176,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ChildrensBooks().subscribe(
       response => {
         this.childrensBooks = response
-        console.log(this.childrensBooks)
+        console.log("Children Books", this.childrensBooks)
       }
     )
   }
@@ -181,7 +185,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ClassicsBooks().subscribe(
       response => {
         this.classicsBooks = response
-        console.log(this.classicsBooks)
+        console.log("Classic Books", this.classicsBooks)
       }
     )
   }
@@ -190,7 +194,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.CrimeBooks().subscribe(
       response => {
         this.crimeBooks = response
-        console.log(this.crimeBooks)
+        console.log("Crime Books", this.crimeBooks)
       }
     )
   }
@@ -199,7 +203,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.DramaBooks().subscribe(
       response => {
         this.dramaBooks = response
-        console.log(this.dramaBooks)
+        console.log("Drama Books", this.dramaBooks)
       }
     )
   }
@@ -208,7 +212,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.FantasyBooks().subscribe(
       response => {
         this.fantasyBooks = response
-        console.log(this.fantasyBooks)
+        console.log("Fantasy Books", this.fantasyBooks)
       }
     )
   }
@@ -217,7 +221,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.HistoryBooks().subscribe(
       response => {
         this.historyBooks = response
-        console.log(this.historyBooks)
+        console.log("History Books", this.historyBooks)
       }
     )
   }
@@ -226,7 +230,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.HorrorBooks().subscribe(
       response => {
         this.horrorBooks = response
-        console.log(this.horrorBooks)
+        console.log("Horror Books:", this.horrorBooks)
       }
     )
   }
@@ -235,7 +239,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.HumourBooks().subscribe(
       response => {
         this.humourBooks = response
-        console.log(this.humourBooks)
+        console.log("Humor Books", this.humourBooks)
       }
     )
   }
@@ -244,7 +248,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.MangaBooks().subscribe(
       response => {
         this.mangaBooks = response
-        console.log(this.mangaBooks)
+        console.log("Mangas List", this.mangaBooks)
       }
     )
   }
@@ -253,7 +257,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ParanormalBooks().subscribe(
       response => {
         this.paranormalBooks = response
-        console.log(this.paranormalBooks)
+        console.log("Paranormal Books", this.paranormalBooks)
       }
     )
   }
@@ -262,7 +266,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.PhilosophyBooks().subscribe(
       response => {
         this.philosophyBooks = response
-        console.log(this.philosophyBooks)
+        console.log("Philosophy Books", this.philosophyBooks)
       }
     )
   }
@@ -271,7 +275,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.PsychologyBooks().subscribe(
       response => {
         this.psychologyBooks = response
-        console.log(this.psychologyBooks)
+        console.log("Psychology Books", this.psychologyBooks)
       }
     )
   }
@@ -280,7 +284,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ReligionBooks().subscribe(
       response => {
         this.religionBooks = response
-        console.log(this.religionBooks)
+        console.log("Religion Books", this.religionBooks)
       }
     )
   }
@@ -289,7 +293,7 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.ScienceBooks().subscribe(
       response => {
         this.scienceBooks = response
-        console.log(this.scienceBooks)
+        console.log("Science Books:", this.scienceBooks)
       }
     )
   }
@@ -298,7 +302,25 @@ export class AllBooksComponent implements OnInit{
     return this.bookService.SciFiBooks().subscribe(
       response => {
         this.sciFiBooks = response
-        console.log(this.sciFiBooks)
+        console.log("Sci-Fi Books", this.sciFiBooks)
+      }
+    )
+  }
+
+  nameDescending() {
+    return this.bookService.sortByNameDescending().subscribe(
+      response => {
+        this.sortByNameDescending = response
+        console.log('desc books', this.sortByNameDescending)
+      }
+    )
+  }
+
+  nameAscending() {
+    return this.bookService.sortByNameAscending().subscribe(
+      response => {
+        this.sortByNameAscending = response
+        console.log('asc books', this.sortByNameAscending)
       }
     )
   }
@@ -308,24 +330,26 @@ export class AllBooksComponent implements OnInit{
     this.allBooksActive = true;
     this.foreignBooksActive = false;
     this.serbianBooksActive = false;
-    this.actionBooks = false;
-    this.adventureBooks = false;
-    this.biographyBooks = false;
-    this.childrensBooks = false;
-    this.classicsBooks = false;
-    this.crimeBooks = false;
-    this.dramaBooks = false;
-    this.fantasyBooks = false;
-    this.historyBooks = false;
-    this.horrorBooks = false;
-    this.humourBooks = false;
-    this.mangaBooks = false;
-    this.paranormalBooks = false;
-    this.philosophyBooks = false;
-    this.psychologyBooks = false;
-    this.religionBooks = false;
-    this.scienceBooks = false;
-    this.sciFiBooks = false;
+    this.actionBooksActive = false;
+    this.adventureBooksActive = false;
+    this.biographyBooksActive = false;
+    this.childrensBooksActive = false;
+    this.classicsBooksActive = false;
+    this.crimeBooksActive = false;
+    this.dramaBooksActive = false;
+    this.fantasyBooksActive = false;
+    this.historyBooksActive = false;
+    this.horrorBooksActive = false;
+    this.humourBooksActive = false;
+    this.mangaBooksActive = false;
+    this.paranormalBooksActive = false;
+    this.philosophyBooksActive = false;
+    this.psychologyBooksActive = false;
+    this.religionBooksActive = false;
+    this.scienceBooksActive = false;
+    this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false; 
   }
 
   foreignBooksActive: boolean = false
@@ -333,24 +357,26 @@ export class AllBooksComponent implements OnInit{
     this.allBooksActive = false;
     this.foreignBooksActive = true;
     this.serbianBooksActive = false;
-    this.actionBooks = false;
-    this.adventureBooks = false;
-    this.biographyBooks = false;
-    this.childrensBooks = false;
-    this.classicsBooks = false;
-    this.crimeBooks = false;
-    this.dramaBooks = false;
-    this.fantasyBooks = false;
-    this.historyBooks = false;
-    this.horrorBooks = false;
-    this.humourBooks = false;
-    this.mangaBooks = false;
-    this.paranormalBooks = false;
-    this.philosophyBooks = false;
-    this.psychologyBooks = false;
-    this.religionBooks = false;
-    this.scienceBooks = false;
-    this.sciFiBooks = false;
+    this.actionBooksActive = false;
+    this.adventureBooksActive = false;
+    this.biographyBooksActive = false;
+    this.childrensBooksActive = false;
+    this.classicsBooksActive = false;
+    this.crimeBooksActive = false;
+    this.dramaBooksActive = false;
+    this.fantasyBooksActive = false;
+    this.historyBooksActive = false;
+    this.horrorBooksActive = false;
+    this.humourBooksActive = false;
+    this.mangaBooksActive = false;
+    this.paranormalBooksActive = false;
+    this.philosophyBooksActive = false;
+    this.psychologyBooksActive = false;
+    this.religionBooksActive = false;
+    this.scienceBooksActive = false;
+    this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   serbianBooksActive: boolean = false
@@ -376,6 +402,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive= false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   actionBooksActive:boolean = false
@@ -401,6 +429,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   adventureBooksActive:boolean = false
@@ -426,6 +456,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   biographyBooksActive:boolean = false
@@ -451,6 +483,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   childrensBooksActive:boolean = false
@@ -476,6 +510,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   classicsBooksActive:boolean = false
@@ -501,6 +537,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
   
   crimeBooksActive:boolean = false
@@ -526,6 +564,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   dramaBooksActive:boolean = false
@@ -551,6 +591,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   fantasyBooksActive:boolean = false
@@ -576,6 +618,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   historyBooksActive:boolean = false
@@ -601,6 +645,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   horrorBooksActive:boolean = false
@@ -626,6 +672,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   humourBooksActive:boolean = false
@@ -651,6 +699,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   mangaBooksActive:boolean = false
@@ -676,6 +726,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   
@@ -702,6 +754,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   philosophyBooksActive:boolean = false
@@ -727,6 +781,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   psychologyBooksActive:boolean = false
@@ -752,6 +808,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   religionBooksActive:boolean = false
@@ -777,6 +835,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = true;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   scienceBooksActive:boolean = false
@@ -802,6 +862,8 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = true;
     this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
   }
 
   sciFiBooksActive:boolean = false
@@ -827,6 +889,62 @@ export class AllBooksComponent implements OnInit{
     this.religionBooksActive = false;
     this.scienceBooksActive = false;
     this.sciFiBooksActive = true;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = false;
+  }
+
+  sortByNameDescendingActive:boolean =false;
+  showBooksByNameDescending() {
+    this.allBooksActive = false;
+    this.foreignBooksActive = false;
+    this.serbianBooksActive = false;
+    this.actionBooksActive = false;
+    this.adventureBooksActive = false;
+    this.biographyBooksActive = false;
+    this.childrensBooksActive = false;
+    this.classicsBooksActive = false;
+    this.crimeBooksActive = false;
+    this.dramaBooksActive = false;
+    this.fantasyBooksActive = false;
+    this.historyBooksActive = false;
+    this.horrorBooksActive = false;
+    this.humourBooksActive = false;
+    this.mangaBooksActive = false;
+    this.paranormalBooksActive = false;
+    this.philosophyBooksActive = false;
+    this.psychologyBooksActive = false;
+    this.religionBooksActive = false;
+    this.scienceBooksActive = false;
+    this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = true;
+    this.sortByNameAscendingActive = false;
+  }
+
+  sortByNameAscendingActive:boolean =false;
+  showBooksByNameAscending() {
+    this.allBooksActive = false;
+    this.foreignBooksActive = false;
+    this.serbianBooksActive = false;
+    this.actionBooksActive = false;
+    this.adventureBooksActive = false;
+    this.biographyBooksActive = false;
+    this.childrensBooksActive = false;
+    this.classicsBooksActive = false;
+    this.crimeBooksActive = false;
+    this.dramaBooksActive = false;
+    this.fantasyBooksActive = false;
+    this.historyBooksActive = false;
+    this.horrorBooksActive = false;
+    this.humourBooksActive = false;
+    this.mangaBooksActive = false;
+    this.paranormalBooksActive = false;
+    this.philosophyBooksActive = false;
+    this.psychologyBooksActive = false;
+    this.religionBooksActive = false;
+    this.scienceBooksActive = false;
+    this.sciFiBooksActive = false;
+    this.sortByNameDescendingActive = false;
+    this.sortByNameAscendingActive = true;
   }
 
   

@@ -322,13 +322,28 @@ namespace MyBookShelfBackend.Controllers
             return await _context.Books.Where(b => b.Categories == "Science").ToListAsync();
         }
 
-
         [HttpGet(template: "SciFiBooks")]
         public async Task<List<Books>> GetSciFiBooks()
         {
             return await _context.Books.Where(b => b.Categories == "Sci-Fi").ToListAsync();
         }
 
+        [HttpGet(template: "SortByNameDescending")]
+        public async Task<IEnumerable<Books>> SortByNameDescending()
+        {
+            return await _context.Books
+                .OrderByDescending(b=> b.Title)
+                .ToListAsync();
+        }
+
+        [HttpGet(template: "SortByNameAscending")]
+        public async Task<IEnumerable<Books>> SortByNameAscending()
+        {
+            return await _context.Books
+                .OrderByDescending(b => b.Title)
+                .Reverse()
+                .ToListAsync();
+        }
 
 
     } 

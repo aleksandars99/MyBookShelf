@@ -3,6 +3,30 @@
       <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
           <h1 class="text-4xl font-bold tracking-tight text-gray-900 ">All Books</h1>
+
+        <div class="flex items-center">
+          <div class="relative inline-block text-left">
+            <div>
+              <label class="sortButton">
+
+                <div class="dd-button">
+                  Sort
+                </div>
+              
+                <input type="checkbox" class="dd-input" id="test">
+              
+                <ul class="dd-menu">
+                  <li (click)="showBooksByNameDescending()">Sort by name Descending</li>
+                  <li (click)="showBooksByNameAscending()">Sort by name Ascending</li>
+                  <li>Something else here</li>
+                </ul>
+                
+              </label>
+            </div>
+            
+          </div>
+        </div>
+
         </div>
   
         <section aria-labelledby="products-heading" class="pb-24 pt-6">
@@ -249,6 +273,437 @@
               </div>
             </div>
 
+            <div class="flex flex-wrap flex-row" *ngIf="biographyBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of biographyBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="childrensBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of childrensBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="classicsBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of classicsBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="crimeBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of crimeBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="dramaBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of dramaBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="fantasyBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of fantasyBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="historyBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of historyBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="horrorBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of horrorBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="humourBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of humourBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="mangaBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of mangaBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="paranormalBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of paranormalBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="philosophyBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of philosophyBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="psychologyBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of psychologyBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="religionBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of religionBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="scienceBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of scienceBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="sciFiBooksActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of sciFiBooks">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="sortByNameDescendingActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of sortByNameDescending">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap flex-row" *ngIf="sortByNameAscendingActive">
+              <div class="max-w-xs w-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-white mb-2 mr-3"  *ngFor="let book of sortByNameAscending">
+                  <a class="relative inline-block">
+                      <img (click)="viewBook(book.isbn)" class="h-auto rounded-t-lg cursor-pointer" height="150px" [src]="book.image" alt="" />
+                    
+                      <div *ngIf="userCredentials.roles == 'admin'">
+                          <svg (click)="deleteBook(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-0 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                          </svg>
+                          <svg (click)="editBookByIsbn(book.isbn)" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7 absolute top-0 right-7 m-2 bg-gray-800 cursor-pointer">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                      </div>
+                  </a>
+                  <!-- in case of problems set h-auto to h-32 -->
+                  <div class="p-2 h-auto overflow-hidden">
+                      <a>
+                          <h5 class="mb-2 text-xl text-center font-bold tracking-tight text-gray-900 dark:text-gray-800 break-words">{{book.title}}</h5>
+                      </a>
+                      <p *ngIf="book.author" class="mb-3 font-normal text-center h-auto text-gray-700 dark:text-gray-500">{{book.author.name}}</p>
+                  </div>
+              </div>
+            </div>
 
             </div>
           </div>

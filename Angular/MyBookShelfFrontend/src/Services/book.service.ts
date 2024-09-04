@@ -106,4 +106,12 @@ export class BookService {
     return this.http.get('https://localhost:7025/api/SciFiBooks')
   }
 
+  sortByNameDescending():Observable<any> {
+    return this.http.get('https://localhost:7025/api/SortByNameDescending')
+  }
+
+  sortByNameAscending():Observable<any> {
+    return this.http.get('https://localhost:7025/api/SortByNameAscending')
+  }
+
 }
