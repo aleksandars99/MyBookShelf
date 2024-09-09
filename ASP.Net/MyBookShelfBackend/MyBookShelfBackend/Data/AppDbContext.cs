@@ -15,6 +15,8 @@ namespace MyBookShelfBackend.Data
         public DbSet<Books> Books { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Author> Author { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,6 +45,12 @@ namespace MyBookShelfBackend.Data
                 entity.HasMany(b => b.Books)
                 .WithOne(a => a.Author)
                 .HasForeignKey(a => a.AuthorId);
+            });
+            builder.Entity<Cart>(entity =>
+            {
+                entity.HasMany(c => c.CartItems)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Cascade);
             });
         }
 

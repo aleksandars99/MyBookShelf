@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyBookShelfBackend.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBookShelfBackend.Models
 {

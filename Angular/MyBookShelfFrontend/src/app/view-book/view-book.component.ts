@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from '../../Services/user.service';
 import { Router } from '@angular/router';
 import { AuthorService } from '../../Services/author.service';
+import { Emitters } from '../emitters/emitters';
 
 @Component({
   selector: 'app-view-book',
@@ -53,10 +54,18 @@ export class ViewBookComponent implements OnInit{
     }, 1000);
   }
 
+  authenticated:boolean = false
   ngOnInit(): void {
     this.getCurrentBook()
     this.getCurrentUser()
     //console.log(this.form.value)
+
+    Emitters.authEmitter.subscribe(
+      (auth:boolean) => {
+        this.authenticated = auth;
+        console.log('user is auth', this.authenticated)
+      }
+    )
   }
   currentBook:any = {}
   aboutBook = true

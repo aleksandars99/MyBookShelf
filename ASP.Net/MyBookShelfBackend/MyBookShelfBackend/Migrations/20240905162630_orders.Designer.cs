@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyBookShelfBackend.Data;
 
@@ -11,9 +12,11 @@ using MyBookShelfBackend.Data;
 namespace MyBookShelfBackend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240905162630_orders")]
+    partial class orders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,6 +158,21 @@ namespace MyBookShelfBackend.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("MyBookShelfBackend.Data.BookOrders", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookOrders");
+                });
+
             modelBuilder.Entity("MyBookShelfBackend.Models.Author", b =>
                 {
                     b.Property<int>("Id")
@@ -246,54 +264,6 @@ namespace MyBookShelfBackend.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("MyBookShelfBackend.Models.Cart", b =>
-                {
-                    b.Property<int>("CartId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
-
-                    b.Property<decimal>("CartPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CartId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("MyBookShelfBackend.Models.CartItem", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("CartId");
-
-                    b.ToTable("CartItems");
-                });
-
             modelBuilder.Entity("MyBookShelfBackend.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -321,6 +291,38 @@ namespace MyBookShelfBackend.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("MyBookShelfBackend.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("MyBookShelfBackend.Models.Users", b =>
@@ -452,6 +454,25 @@ namespace MyBookShelfBackend.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MyBookShelfBackend.Data.BookOrders", b =>
+                {
+                    b.HasOne("MyBookShelfBackend.Models.Books", "Book")
+                        .WithMany("BookOrders")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyBookShelfBackend.Models.Order", "Order")
+                        .WithMany("BookOrders")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("MyBookShelfBackend.Models.Books", b =>
                 {
                     b.HasOne("MyBookShelfBackend.Models.Author", "Author")
@@ -459,33 +480,6 @@ namespace MyBookShelfBackend.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("MyBookShelfBackend.Models.Cart", b =>
-                {
-                    b.HasOne("MyBookShelfBackend.Models.Users", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MyBookShelfBackend.Models.CartItem", b =>
-                {
-                    b.HasOne("MyBookShelfBackend.Models.Books", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyBookShelfBackend.Models.Cart", null)
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("MyBookShelfBackend.Models.Comment", b =>
@@ -499,6 +493,25 @@ namespace MyBookShelfBackend.Migrations
                     b.Navigation("book");
                 });
 
+            modelBuilder.Entity("MyBookShelfBackend.Models.Order", b =>
+                {
+                    b.HasOne("MyBookShelfBackend.Models.Books", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyBookShelfBackend.Models.Users", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("MyBookShelfBackend.Models.Author", b =>
                 {
                     b.Navigation("Books");
@@ -506,12 +519,19 @@ namespace MyBookShelfBackend.Migrations
 
             modelBuilder.Entity("MyBookShelfBackend.Models.Books", b =>
                 {
+                    b.Navigation("BookOrders");
+
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("MyBookShelfBackend.Models.Cart", b =>
+            modelBuilder.Entity("MyBookShelfBackend.Models.Order", b =>
                 {
-                    b.Navigation("CartItems");
+                    b.Navigation("BookOrders");
+                });
+
+            modelBuilder.Entity("MyBookShelfBackend.Models.Users", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

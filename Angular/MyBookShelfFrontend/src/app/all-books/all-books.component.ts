@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../Services/user.service';
 import { Book } from '../Book';
 import { AuthorService } from '../../Services/author.service';
+import { CartServiceService } from '../../Services/cart-service.service';
 
 @Component({
   selector: 'app-all-books',
@@ -19,6 +20,7 @@ export class AllBooksComponent implements OnInit{
     private bookService: BookService,
     private userService: UserService,
     private authorService: AuthorService,
+    private cartService: CartServiceService,
     private router: Router
   ) 
   {
@@ -945,6 +947,22 @@ export class AllBooksComponent implements OnInit{
     this.sciFiBooksActive = false;
     this.sortByNameDescendingActive = false;
     this.sortByNameAscendingActive = true;
+  }
+
+  cart: any
+  currentCart: any
+  addToCart(bookId: number, quantity: number) {
+    this.cartService.addToCart(bookId, quantity).subscribe(
+      cart=> {
+        this.cart = cart;
+        this.currentCart = cart.cartId
+        console.log(cart)
+        console.log(this.currentCart)
+      }
+    )
+  }
+  removeFromCart(cartId:number ,bookId: number) {
+    this.cartService.removeFromCart(cartId, bookId)
   }
 
   

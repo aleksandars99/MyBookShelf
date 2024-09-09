@@ -15,12 +15,25 @@ import { UserService } from '../../Services/user.service';
 })
 export class NavbarComponent implements OnInit{
   authenticated:boolean = false;
+  logedUser: any
+
   constructor(private userService: UserService, private fb: FlowbiteService, private user: UserService) {}
 
   ngOnInit(): void {
+
+    this.userService.getUser().subscribe(
+      (response:any) => {
+        this.logedUser = response
+        console.log(this.logedUser)
+        Emitters.authEmitter.emit(true)
+      },
+      error => {
+        Emitters.authEmitter.emit(false)
+      }
+    )
+
     this.fb.loadFlowbite(flowbite => {
-      // Your custom code here
-      console.log('Flowbite loaded navbar', flowbite);
+      //console.log('Flowbite loaded navbar', flowbite);
     });
 
     Emitters.authEmitter.subscribe(
